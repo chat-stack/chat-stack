@@ -1,0 +1,47 @@
+# Based on https://www.tomray.dev/nestjs-docker-compose-postgres
+version: '3.8'
+services:
+  meta-gpt-bot-nestjs:
+    container_name: meta-gpt-bot-nestjs
+    depends_on:
+      - meta-gpt-bot-redis
+      - meta-gpt-bot-postgres
+    build:
+      context: .
+      # Only will build local stage from our dockerfile
+      target: local
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - .env
+    # Run a command against the local stage of the image
+    command: pnpm start:debug
+    ports:
+      - ${PORT}:${PORT}
+      - 9229:9229
+
+  meta-gpt-bot-postgres:
+    container_name: meta-gpt-bot-postgres
+    image: postgres:16.0-alpine3.18
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - '${LOCAL_POSTGRES_PORT}:5432'
+    volumes:
+      - docker-nest-postgres:/var/lib/postgresql/data
+
+  meta-gpt-bot-redis:
+    container_name: meta-gpt-bot-redis
+    image: redis:7.2.1-alpine3.18
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
+
+volumes:
+  docker-nest-postgres:
+  redis:
+    driver: local
