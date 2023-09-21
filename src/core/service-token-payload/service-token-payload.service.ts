@@ -28,21 +28,21 @@ export class ServiceTokenPayloadService implements OnApplicationBootstrap {
     let token: string;
     if (!oldPayload) {
       token = this.authService.signServiceToken({
-        role,
+        roles: [role],
       });
       const payload: IServiceTokenPayloadVerified =
         this.authService.verifyToken(token);
       const newPayload = this.serviceTokenPayloadRepository.create({
         createdAt: new Date(),
         updatedAt: new Date(),
-        role: payload.role,
+        role,
         iat: parseInt(payload.iat, 10),
         exp: parseInt(payload.exp, 10),
       });
       await this.em.persistAndFlush(newPayload);
     } else {
       token = this.authService.signServiceToken({
-        role,
+        roles: [role],
         iat: parseInt(oldPayload.iat.toString(), 10), // mikro-orm int8 returns string here, need to convert back
       });
     }

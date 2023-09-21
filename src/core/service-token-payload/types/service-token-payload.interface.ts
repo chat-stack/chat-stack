@@ -1,12 +1,12 @@
 import { Role } from 'src/core/role/types/role.type';
 
 export interface IServiceTokenPayload {
-  role: Role;
+  roles: Role[];
   iat?: number;
 }
 
 export interface IServiceTokenPayloadVerified {
-  role: Role;
+  roles: Role[];
   iat: string;
   exp: string;
 }
