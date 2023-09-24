@@ -1,5 +1,5 @@
 export enum Role {
   ANON = 'ANON',
   SERVICE = 'SERVICE',
-  CUSTOMER = 'CUSTOMER',
+  END_CUSTOMER = 'END_CUSTOMER',
 }
