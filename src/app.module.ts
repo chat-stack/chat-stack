@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 import dbConfig from './config/db.config';
 import { AuthModule } from './core/auth/auth.module';
 import { ServiceTokenPayloadModule } from './core/service-token-payload/service-token-payload.module';
+import { ChatBotModule } from './core/chat-bot/chat-bot.module';
 
 @Module({
   imports: [
@@ -23,6 +24,8 @@ import { ServiceTokenPayloadModule } from './core/service-token-payload/service-
         return configService.get<MikroOrmModuleSyncOptions>('database')!;
       },
     }),
+    ServiceTokenPayloadModule,
+    ChatBotModule,
   ],
   controllers: [AppController],
   providers: [AppService],

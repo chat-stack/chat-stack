@@ -33,17 +33,16 @@ export class ServiceTokenPayloadService implements OnApplicationBootstrap {
       const payload: IServiceTokenPayloadVerified =
         this.authService.verifyToken(token);
       const newPayload = this.serviceTokenPayloadRepository.create({
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        ...new ServiceTokenPayload(),
         role,
-        iat: parseInt(payload.iat, 10),
-        exp: parseInt(payload.exp, 10),
+        iat: +payload.iat,
+        exp: +payload.exp,
       });
       await this.em.persistAndFlush(newPayload);
     } else {
       token = this.authService.signServiceToken({
         roles: [role],
-        iat: parseInt(oldPayload.iat.toString(), 10), // mikro-orm int8 returns string here, need to convert back
+        iat: +oldPayload.iat, // mikro-orm int8 returns string here, need to convert back
       });
     }
     return token;
@@ -54,9 +53,11 @@ export class ServiceTokenPayloadService implements OnApplicationBootstrap {
       [Role.ANON, Role.SERVICE].map(async (role) => this.getTokenByRole(role)),
     );
     if (tokens && tokens[0]) {
+      // Role.ANON
       Logger.log(`Anon key: ${tokens[0]}`, 'Bootstrap');
     }
     if (tokens && tokens[1]) {
+      // Role.SERVICE
       Logger.log(`Service key: ${tokens[1]}`, 'Bootstrap');
     }
   }

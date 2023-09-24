@@ -1,7 +1,7 @@
 import { Entity, Enum, Property, Unique } from '@mikro-orm/core';
 
 import { Role } from 'src/core/role/types/role.type';
-import CustomBaseEntity from 'src/util/custom-base-entity.entity';
+import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
 
 @Entity()
 export class ServiceTokenPayload extends CustomBaseEntity {
