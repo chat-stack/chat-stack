@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, Param } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { ApiPaginatedResponse } from 'src/common/decorators/api-paginated-response.decorator';
 import { PageOptionsDto } from 'src/common/dto/page/page-option.dto';
 import { PageDto } from 'src/common/dto/page/page.dto';
+import { ApiMixedResponse } from 'src/common/decorators/api-mixed-response.decorator';
 
 import { ChatBotService } from './chat-bot.service';
 
@@ -33,10 +34,11 @@ export class ChatBotController {
     return this.chatBotService.findAll(pageOptionsDto);
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.chatBotService.findOne(+id);
-  // }
+  @Get(':id')
+  @ApiMixedResponse(ChatBot)
+  findOne(@Param('id') id: string) {
+    return this.chatBotService.findOne(+id);
+  }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateChatBotDto: UpdateChatBotDto) {

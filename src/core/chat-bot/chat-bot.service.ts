@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { EntityManager, EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
@@ -46,5 +46,13 @@ export class ChatBotService {
         pageOptionsDto,
       }),
     );
+  }
+
+  async findOne(id: number): Promise<ChatBot> {
+    return this.chatBotRepository.findOneOrFail(id, {
+      failHandler: () => {
+        throw new NotFoundException();
+      },
+    });
   }
 }

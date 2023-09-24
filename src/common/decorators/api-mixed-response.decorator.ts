@@ -1,46 +1,26 @@
 import { applyDecorators, Type } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
-  ApiExtraModels,
   ApiForbiddenResponse,
   ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiUnauthorizedResponse,
-  getSchemaPath,
 } from '@nestjs/swagger';
 
-import { IApiPaginatedResponseOptions } from 'src/common/interfaces/api-paginated-response-options.interface';
-
-import { PageDto } from 'src/common/dto/page/page.dto';
 import {
   BadRequestExceptionResponse,
   ForbiddenExceptionResponse,
   InternalServerErrorExceptionResponse,
+  NotFoundExceptionResponse,
   UnauthorizedExceptionResponse,
 } from 'src/common/classes/http-exceptions.class';
 
-export const ApiPaginatedResponse = <TModel extends Type<any>>(
-  model: TModel,
-  options?: IApiPaginatedResponseOptions,
-) => {
-  const description = options?.description || '';
+export const ApiMixedResponse = <TModel extends Type<any>>(model: TModel) => {
   return applyDecorators(
-    ApiExtraModels(PageDto, model),
     ApiOkResponse({
-      description,
-      schema: {
-        allOf: [
-          { $ref: getSchemaPath(PageDto) },
-          {
-            properties: {
-              data: {
-                type: 'array',
-                items: { $ref: getSchemaPath(model) },
-              },
-            },
-          },
-        ],
-      },
+      description: 'Ok',
+      type: model,
     }),
     ApiBadRequestResponse({
       description: 'Bad Request',
@@ -53,6 +33,10 @@ export const ApiPaginatedResponse = <TModel extends Type<any>>(
     ApiForbiddenResponse({
       description: 'Forbidden',
       type: ForbiddenExceptionResponse,
+    }),
+    ApiNotFoundResponse({
+      description: 'Not Found',
+      type: NotFoundExceptionResponse,
     }),
     ApiInternalServerErrorResponse({
       description: 'Internal Server Error',
