@@ -3,6 +3,9 @@ import { Reflector } from '@nestjs/core';
 
 import { Observable } from 'rxjs';
 
+import { Role } from 'src/core/role/types/role.type';
+import { ROLES_KEY } from 'src/core/auth/decorators/roles.decorator';
+
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
@@ -10,7 +13,10 @@ export class RolesGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    const roles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
 
     if (!roles) {
       // If there are no roles defined for this route, allow access.
