@@ -7,6 +7,7 @@ import {
   Property,
   Unique,
 } from '@mikro-orm/core';
+import { Exclude } from 'class-transformer';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
 import { ChatSession } from 'src/core/chat-session/entities/chat-session.entity';
@@ -32,5 +33,6 @@ export class ChatBot extends CustomBaseEntity<
   @OneToMany(() => ChatSession, (chatSession) => chatSession.chatBot, {
     nullable: false,
   })
+  @Exclude()
   chatSessions = new Collection<ChatSession>(this);
 }

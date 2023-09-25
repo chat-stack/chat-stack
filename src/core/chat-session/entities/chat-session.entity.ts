@@ -9,6 +9,7 @@ import {
   Property,
   Unique,
 } from '@mikro-orm/core';
+import { Exclude } from 'class-transformer';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
 import { EndCustomer } from 'src/core/end-customer/entities/end-customer.entity';
@@ -52,5 +53,6 @@ export class ChatSession extends CustomBaseEntity<
   @OneToMany(() => ChatHistory, (chatHistory) => chatHistory.chatSession, {
     nullable: false,
   })
+  @Exclude()
   chatHistories = new Collection<ChatHistory>(this);
 }

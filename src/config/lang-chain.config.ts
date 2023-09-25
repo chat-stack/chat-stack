@@ -12,6 +12,7 @@ export default registerAs(
     },
     bufferWindowMemoryInput: {
       memoryKey: 'chat_history',
+      returnMessages: true,
       k: 50,
     },
   }),

@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { ApiMixedResponse } from 'src/common/decorators/api-mixed-response.decorator';
@@ -19,6 +19,7 @@ export class ChatController {
   @Post()
   @ApiOperation({ summary: 'Message and get response from a chat bot' })
   @ApiMixedResponse(ChatHistory)
+  @HttpCode(200)
   async getChatBotResponse(
     @Body() getChatBotResponseDto: GetChatBotResponseDto,
   ) {

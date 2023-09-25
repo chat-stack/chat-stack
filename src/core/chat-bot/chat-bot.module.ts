@@ -10,7 +10,13 @@ import { ChatBot } from './entities/chat-bot.entity';
 @Module({
   imports: [MikroOrmModule.forFeature([ChatBot])],
   controllers: [ChatBotController],
-  providers: [ChatBotService],
+  providers: [
+    ChatBotService,
+    {
+      provide: 'OBJECT_NAME',
+      useValue: 'ChatBot',
+    },
+  ],
   exports: [ChatBotService],
 })
 export class ChatBotModule {}

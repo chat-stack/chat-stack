@@ -60,13 +60,15 @@ export class ChatService {
     const llmChain = this.langChainService.createLLMChain({
       memory: this.langChainService.createBufferWindowMemory(chatHistories),
     });
-    const assistantMessage = await llmChain.run(userMessage);
+    const result = await llmChain.call({
+      input: userMessage,
+    });
     const assistantChatHistory = this.chatHistoryService.createFromSession({
       chatSession,
       chatRole: ChatRole.ASSISTANT,
-      message: assistantMessage,
+      message: result.text,
     });
     await this.em.persistAndFlush(assistantChatHistory);
-    return assistantMessage;
+    return result;
   }
 }

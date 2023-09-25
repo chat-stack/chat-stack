@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UseFilters } from '@nestjs/common';
 
 import { EntityManager } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
@@ -7,6 +7,7 @@ import { EntityRepository } from '@mikro-orm/postgresql';
 import { PageOptionsDto } from 'src/common/dto/page/page-option.dto';
 import { PageDto } from 'src/common/dto/page/page.dto';
 import { PageMetaDto } from 'src/common/dto/page/page-meta.dto';
+import DatabaseExceptionFilter from 'src/common/exception-filters/database-exception.filter';
 
 import { ChatBot } from './entities/chat-bot.entity';
 import { CreateChatBotDto } from './dto/create-chat-bot.dto';
@@ -19,6 +20,7 @@ export class ChatBotService {
     private readonly chatBotRepository: EntityRepository<ChatBot>,
   ) {}
 
+  @UseFilters(DatabaseExceptionFilter)
   async create(createChatBotDto: CreateChatBotDto): Promise<ChatBot> {
     const chatBot = this.chatBotRepository.create(createChatBotDto);
     await this.em.persistAndFlush(chatBot);
