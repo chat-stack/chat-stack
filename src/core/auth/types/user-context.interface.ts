@@ -1,4 +1,4 @@
-import { Role } from 'src/core/role/types/role.type';
+import { Role } from 'src/common/types/role.type';
 
 export interface IUserContext {
   id?: number;

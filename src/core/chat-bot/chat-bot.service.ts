@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
-import { EntityManager, EntityRepository } from '@mikro-orm/core';
+import { EntityManager } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
+import { EntityRepository } from '@mikro-orm/postgresql';
 
 import { PageOptionsDto } from 'src/common/dto/page/page-option.dto';
 import { PageDto } from 'src/common/dto/page/page.dto';
@@ -19,15 +20,14 @@ export class ChatBotService {
   ) {}
 
   async create(createChatBotDto: CreateChatBotDto): Promise<ChatBot> {
-    const chatBot = this.chatBotRepository.create({
-      ...new ChatBot(),
-      ...createChatBotDto,
-    });
+    const chatBot = this.chatBotRepository.create(createChatBotDto);
     await this.em.persistAndFlush(chatBot);
     return chatBot;
   }
 
-  async findAll(pageOptionsDto: PageOptionsDto): Promise<PageDto<ChatBot>> {
+  async findAllPaginated(
+    pageOptionsDto: PageOptionsDto,
+  ): Promise<PageDto<ChatBot>> {
     const { skip, take, order } = pageOptionsDto;
     const [items, itemCount] = await this.chatBotRepository.findAndCount(
       {},
@@ -48,7 +48,7 @@ export class ChatBotService {
     );
   }
 
-  async findOne(id: number): Promise<ChatBot> {
+  async findOneOrFail(id: number): Promise<ChatBot> {
     return this.chatBotRepository.findOneOrFail(id, {
       failHandler: () => {
         throw new NotFoundException();

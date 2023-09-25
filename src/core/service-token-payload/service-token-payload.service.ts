@@ -4,7 +4,7 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository, MikroORM, UseRequestContext } from '@mikro-orm/core';
 import { EntityManager } from '@mikro-orm/postgresql';
 
-import { Role } from 'src/core/role/types/role.type';
+import { Role } from 'src/common/types/role.type';
 import { AuthService } from 'src/core/auth/auth.service';
 
 import { ServiceTokenPayload } from './entities/service-token-payload.entity';
@@ -33,7 +33,6 @@ export class ServiceTokenPayloadService implements OnApplicationBootstrap {
       const payload: IServiceTokenPayloadVerified =
         this.authService.verifyToken(token);
       const newPayload = this.serviceTokenPayloadRepository.create({
-        ...new ServiceTokenPayload(),
         role,
         iat: +payload.iat,
         exp: +payload.exp,

@@ -13,13 +13,13 @@ WORKDIR /usr/src/app
 # Copy application dependency manifests to the container image.
 # A wildcard is used to ensure copying both package.json AND package-lock.json (when available).
 # Copying this first prevents re-running pnpm install on every code change.
-COPY --chown=node:node package*.json ./
+COPY --chown=node:node package.json pnpm-lock.yaml* ./
 
 ENV NODE_ENV local
 
 # Install app dependencies using pnpm
 RUN npm install -g pnpm
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 # Bundle app source
 COPY --chown=node:node . .

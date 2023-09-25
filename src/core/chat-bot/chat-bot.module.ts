@@ -11,5 +11,6 @@ import { ChatBot } from './entities/chat-bot.entity';
   imports: [MikroOrmModule.forFeature([ChatBot])],
   controllers: [ChatBotController],
   providers: [ChatBotService],
+  exports: [ChatBotService],
 })
 export class ChatBotModule {}

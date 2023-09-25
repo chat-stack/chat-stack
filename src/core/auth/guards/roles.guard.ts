@@ -3,7 +3,7 @@ import { Reflector } from '@nestjs/core';
 
 import { Observable } from 'rxjs';
 
-import { Role } from 'src/core/role/types/role.type';
+import { Role } from 'src/common/types/role.type';
 import { ROLES_KEY } from 'src/core/auth/decorators/roles.decorator';
 
 @Injectable()
