@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 import { EntityManager } from '@mikro-orm/postgresql';
 import { QueryOrder } from '@mikro-orm/core';
@@ -9,6 +10,7 @@ import { ChatHistoryService } from 'src/core/chat-history/chat-history.service';
 import { ChatRole } from 'src/common/types/chat-role.type';
 import { EndCustomerService } from 'src/core/end-customer/end-customer.service';
 import { LangChainService } from 'src/core/lang-chain/lang-chain.service';
+import { TLangChainConfig } from 'src/config/types/lang-chain.config.type';
 
 import { GetChatBotResponseDto } from './dto/get-chat-bot-response.dto';
 
@@ -21,6 +23,7 @@ export class ChatService {
     private readonly chatSessionService: ChatSessionService,
     private readonly chatHistoryService: ChatHistoryService,
     private readonly langChainService: LangChainService,
+    private readonly configService: ConfigService,
   ) {}
   async getChatBotResponse(getChatBotResponseDto: GetChatBotResponseDto) {
     const { chatBotId, chatSessionDistinctId, userMessage, endCustomerId } =
@@ -48,7 +51,9 @@ export class ChatService {
         orderBy: {
           id: QueryOrder.DESC,
         },
-        limit: 50,
+        limit:
+          this.configService.get<TLangChainConfig>('langChain')
+            ?.bufferWindowMemoryInput.k || 50,
       },
     );
     const chatHistories = chatHistoriesRevert.sort((a, b) => b.id - a.id);
