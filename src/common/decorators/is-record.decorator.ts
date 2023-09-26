@@ -18,7 +18,7 @@ export function IsRecord(validationOptions?: ValidationOptions) {
           }
 
           for (const key in value) {
-            if (typeof key !== 'string' || typeof value[key] !== 'string') {
+            if (typeof key !== 'string') {
               return false;
             }
           }
@@ -26,7 +26,7 @@ export function IsRecord(validationOptions?: ValidationOptions) {
           return true;
         },
         defaultMessage(args: ValidationArguments) {
-          return `${args.property} must be a Record<string, string>.`;
+          return `${args.property} must be a Record<string, any>.`;
         },
       },
     });

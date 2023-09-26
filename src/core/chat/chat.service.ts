@@ -31,7 +31,7 @@ export class ChatService {
       chatSessionDistinctId,
       userMessage,
       endCustomerId,
-      variables,
+      metadata,
     } = getChatBotResponseDto;
     const chatBot = await this.chatBotService.findOneOrFail(chatBotId);
     const endCustomer = endCustomerId
@@ -41,7 +41,7 @@ export class ChatService {
       chatSessionDistinctId,
       chatBot,
       endCustomer,
-      variables,
+      metadata,
     );
     const chatHistory = this.chatHistoryService.createFromSession({
       chatSession,

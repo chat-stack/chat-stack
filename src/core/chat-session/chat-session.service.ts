@@ -10,6 +10,7 @@ import { ChatRole } from 'src/common/types/chat-role.type';
 import { ChatBot } from 'src/core/chat-bot/entities/chat-bot.entity';
 import { ChatHistory } from 'src/core/chat-history/entities/chat-history.entity';
 import { EndCustomer } from 'src/core/end-customer/entities/end-customer.entity';
+import { convertRecordValueToString } from 'src/common/util/convert-record-value-to-string';
 
 import { ChatSession } from './entities/chat-session.entity';
 
@@ -26,7 +27,7 @@ export class ChatSessionService {
     distinctId: string,
     chatBot: Loaded<ChatBot>,
     endCustomer?: Loaded<EndCustomer>,
-    variables?: Record<string, string>,
+    metadata?: Record<string, any>,
   ) {
     let chatSession = await this.chatSessionRepository.findOne({ distinctId });
     if (!chatSession) {
@@ -41,10 +42,10 @@ export class ChatSessionService {
           this.chatHistoryService.createFromSession({
             chatSession,
             chatRole: ChatRole.SYSTEM,
-            message: variables
+            message: metadata
               ? await PromptTemplate.fromTemplate(
                   chatBot.promptTemplate,
-                ).format(variables)
+                ).format(convertRecordValueToString(metadata))
               : chatBot.promptTemplate,
           }),
         );
