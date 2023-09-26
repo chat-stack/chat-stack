@@ -6,6 +6,8 @@ import {
 } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+import * as fs from 'fs';
+
 import { AppModule } from './app.module';
 
 import { TrimPipe } from './common/pipes/trim.pipe';
@@ -29,6 +31,15 @@ async function bootstrap() {
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
+  if (process.env.NODE_ENV === 'local') {
+    fs.writeFileSync(
+      './swagger-spec.json',
+      JSON.stringify({
+        ...document,
+        servers: [{ url: 'http://localhost:5001' }],
+      }),
+    );
+  }
   SwaggerModule.setup('api', app, document);
   await app.listen(process.env.PORT || 3000);
 }
