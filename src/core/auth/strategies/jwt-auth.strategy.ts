@@ -23,10 +23,11 @@ export class JwtAuthStrategy extends PassportStrategy(
   // Passport will decodes the JWT using the secret key, then invokes the validate method below with the decoded JSON as a parameter
   // Passport builds a user object on the return value and attaches it to the request object
   async validate(payload: IJwtPayload): Promise<IUserContext> {
-    const { roles, sub: id } = payload;
+    const { roles, sub: id, endCustomerId } = payload;
     return {
       id,
       roles,
+      endCustomerId,
     };
   }
 }

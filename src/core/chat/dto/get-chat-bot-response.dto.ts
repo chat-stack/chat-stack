@@ -23,11 +23,6 @@ export class GetChatBotResponseDto {
   userMessage: string;
 
   @ApiProperty()
-  @IsInt()
-  @IsOptional()
-  endCustomerId?: number;
-
-  @ApiProperty()
   @IsRecord()
   @IsOptional()
   metadata?: Record<string, any>;

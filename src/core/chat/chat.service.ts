@@ -11,6 +11,7 @@ import { ChatRole } from 'src/common/types/chat-role.type';
 import { EndCustomerService } from 'src/core/end-customer/end-customer.service';
 import { LangChainService } from 'src/core/lang-chain/lang-chain.service';
 import { TLangChainConfig } from 'src/config/types/lang-chain.config.type';
+import { IUserContext } from 'src/core/auth/types/user-context.interface';
 
 import { GetChatBotResponseDto } from './dto/get-chat-bot-response.dto';
 
@@ -25,14 +26,13 @@ export class ChatService {
     private readonly langChainService: LangChainService,
     private readonly configService: ConfigService,
   ) {}
-  async getChatBotResponse(getChatBotResponseDto: GetChatBotResponseDto) {
-    const {
-      chatBotId,
-      chatSessionDistinctId,
-      userMessage,
-      endCustomerId,
-      metadata,
-    } = getChatBotResponseDto;
+  async getChatBotResponse(
+    userContext: IUserContext,
+    getChatBotResponseDto: GetChatBotResponseDto,
+  ) {
+    const { endCustomerId } = userContext;
+    const { chatBotId, chatSessionDistinctId, userMessage, metadata } =
+      getChatBotResponseDto;
     const chatBot = await this.chatBotService.findOneOrFail(chatBotId);
     const endCustomer = endCustomerId
       ? await this.endCustomerService.findOneOrFail(endCustomerId)
