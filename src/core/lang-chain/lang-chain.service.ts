@@ -49,7 +49,8 @@ export class LangChainService {
   createLLMChain(llmInput: Partial<LLMChainInput>) {
     return new LLMChain({
       llm: this.model,
-      prompt: PromptTemplate.fromTemplate(''),
+      prompt: PromptTemplate.fromTemplate('{input}'),
+      verbose: true,
       ...llmInput,
     });
   }

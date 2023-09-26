@@ -6,7 +6,7 @@ export default registerAs(
   'langChain',
   (): TLangChainConfig => ({
     model: {
-      modelName: 'gpt-3.5-turbo-16k-0613',
+      modelName: 'gpt-3.5-turbo-0613',
       temperature: 0,
       verbose: true,
     },

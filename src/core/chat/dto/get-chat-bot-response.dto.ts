@@ -2,6 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { IsInt, IsOptional, IsString, IsUUID } from 'class-validator';
 
+import { IsRecord } from 'src/common/decorators/is-record.decorator';
+
 export class GetChatBotResponseDto {
   @ApiProperty()
   @IsInt()
@@ -20,4 +22,9 @@ export class GetChatBotResponseDto {
   @IsInt()
   @IsOptional()
   endCustomerId?: number;
+
+  @ApiProperty()
+  @IsRecord()
+  @IsOptional()
+  variables?: Record<string, string>;
 }

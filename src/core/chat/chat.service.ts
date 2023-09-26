@@ -26,8 +26,13 @@ export class ChatService {
     private readonly configService: ConfigService,
   ) {}
   async getChatBotResponse(getChatBotResponseDto: GetChatBotResponseDto) {
-    const { chatBotId, chatSessionDistinctId, userMessage, endCustomerId } =
-      getChatBotResponseDto;
+    const {
+      chatBotId,
+      chatSessionDistinctId,
+      userMessage,
+      endCustomerId,
+      variables,
+    } = getChatBotResponseDto;
     const chatBot = await this.chatBotService.findOneOrFail(chatBotId);
     const endCustomer = endCustomerId
       ? await this.endCustomerService.findOneOrFail(endCustomerId)
@@ -36,6 +41,7 @@ export class ChatService {
       chatSessionDistinctId,
       chatBot,
       endCustomer,
+      variables,
     );
     const chatHistory = this.chatHistoryService.createFromSession({
       chatSession,

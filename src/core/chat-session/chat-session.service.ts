@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { EntityRepository, EntityManager } from '@mikro-orm/postgresql';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Loaded } from '@mikro-orm/core';
+import { PromptTemplate } from 'langchain/prompts';
 
 import { ChatHistoryService } from 'src/core/chat-history/chat-history.service';
 import { ChatRole } from 'src/common/types/chat-role.type';
@@ -25,6 +26,7 @@ export class ChatSessionService {
     distinctId: string,
     chatBot: Loaded<ChatBot>,
     endCustomer?: Loaded<EndCustomer>,
+    variables?: Record<string, string>,
   ) {
     let chatSession = await this.chatSessionRepository.findOne({ distinctId });
     if (!chatSession) {
@@ -39,7 +41,11 @@ export class ChatSessionService {
           this.chatHistoryService.createFromSession({
             chatSession,
             chatRole: ChatRole.SYSTEM,
-            message: chatBot.promptTemplate,
+            message: variables
+              ? await PromptTemplate.fromTemplate(
+                  chatBot.promptTemplate,
+                ).format(variables)
+              : chatBot.promptTemplate,
           }),
         );
       }
