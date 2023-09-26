@@ -31,7 +31,7 @@ services:
     ports:
       - '${LOCAL_POSTGRES_PORT}:5432'
     volumes:
-      - docker-nest-postgres:/var/lib/postgresql/data
+      - meta-gpt-bot-postgres:/var/lib/postgresql/data
 
   meta-gpt-bot-redis:
     container_name: meta-gpt-bot-redis
@@ -39,9 +39,20 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - redis:/data
+      - meta-gpt-bot-redis:/data
+
+  meta-gpt-bot-chroma:
+    image: ghcr.io/chroma-core/chroma:latest
+    volumes:
+      # Default configuration for persist_directory in chromadb/config.py
+      # Currently it's located in "/chroma/chroma/"
+      - meta_gpt_bot_chroma_persistent_folder:/chroma/chroma/
+    ports:
+      - 8000:8000
 
 volumes:
-  docker-nest-postgres:
-  redis:
+  meta-gpt-bot-postgres:
+  meta-gpt-bot-redis:
+    driver: local
+  meta_gpt_bot_chroma_persistent_folder:
     driver: local
