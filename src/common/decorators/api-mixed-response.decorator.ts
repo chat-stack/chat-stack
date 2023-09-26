@@ -14,7 +14,7 @@ import {
   InternalServerErrorExceptionResponse,
   NotFoundExceptionResponse,
   UnauthorizedExceptionResponse,
-} from 'src/common/classes/http-exceptions.class';
+} from 'src/common/classes/http-exceptions';
 
 export const ApiMixedResponse = <TModel extends Type<any>>(model: TModel) => {
   return applyDecorators(

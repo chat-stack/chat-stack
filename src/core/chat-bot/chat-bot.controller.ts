@@ -46,7 +46,7 @@ export class ChatBotController {
   async findAll(
     @Query() pageOptionsDto: PageOptionsDto,
   ): Promise<PageDto<ChatBot>> {
-    return this.chatBotService.findAllPaginated(pageOptionsDto);
+    return this.chatBotService.findPage(pageOptionsDto);
   }
 
   @Get(':id')

@@ -17,7 +17,7 @@ import {
   ForbiddenExceptionResponse,
   InternalServerErrorExceptionResponse,
   UnauthorizedExceptionResponse,
-} from 'src/common/classes/http-exceptions.class';
+} from 'src/common/classes/http-exceptions';
 
 export const ApiPaginatedResponse = <TModel extends Type<any>>(
   model: TModel,

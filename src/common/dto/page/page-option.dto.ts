@@ -8,7 +8,7 @@ export class PageOptionsDto {
   @ApiPropertyOptional({ enum: QueryOrder, default: QueryOrder.ASC })
   @IsEnum(QueryOrder)
   @IsOptional()
-  readonly order?: QueryOrder = QueryOrder.ASC;
+  readonly order: QueryOrder = QueryOrder.ASC;
 
   @ApiPropertyOptional({
     minimum: 1,
