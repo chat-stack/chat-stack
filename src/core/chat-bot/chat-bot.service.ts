@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
-import { EntityManager } from '@mikro-orm/core';
+import { EntityManager, wrap } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 
 import { PageOptionsDto } from 'src/common/dto/page/page-option.dto';
@@ -9,6 +9,7 @@ import { CustomEntityRepository } from 'src/common/repositories/custom-entity-re
 
 import { ChatBot } from './entities/chat-bot.entity';
 import { CreateChatBotDto } from './dto/create-chat-bot.dto';
+import { UpdateChatBotDto } from './dto/update-chat-bot.dto';
 
 @Injectable()
 export class ChatBotService {
@@ -37,5 +38,18 @@ export class ChatBotService {
         },
       },
     );
+  }
+
+  async update(uuid: string, updateChatBotDto: UpdateChatBotDto) {
+    const chatBot = await this.findOneOrFail(uuid);
+    wrap(chatBot).assign(updateChatBotDto);
+    await this.em.persistAndFlush(chatBot);
+    return chatBot;
+  }
+
+  async remove(uuid: string) {
+    const chatBot = await this.findOneOrFail(uuid);
+    await this.em.removeAndFlush(chatBot);
+    return chatBot;
   }
 }

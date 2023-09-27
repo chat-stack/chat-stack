@@ -7,6 +7,8 @@ import {
   Param,
   UseGuards,
   UseFilters,
+  Patch,
+  Delete,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
@@ -24,6 +26,7 @@ import { ChatBotService } from './chat-bot.service';
 
 import { CreateChatBotDto } from './dto/create-chat-bot.dto';
 import { ChatBot } from './entities/chat-bot.entity';
+import { UpdateChatBotDto } from './dto/update-chat-bot.dto';
 
 @ApiTags('ChatBot')
 @UseGuards(RolesGuard)
@@ -56,17 +59,24 @@ export class ChatBotController {
   @Get(':uuid')
   @ApiOperation({ summary: 'Get ChatBot' })
   @ApiMixedResponse(ChatBot)
-  findOne(@Param('uuid') uuid: string): Promise<ChatBot> {
+  async findOne(@Param('uuid') uuid: string): Promise<ChatBot> {
     return this.chatBotService.findOneOrFail(uuid);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateChatBotDto: UpdateChatBotDto) {
-  //   return this.chatBotService.update(+id, updateChatBotDto);
-  // }
+  @Patch(':uuid')
+  @ApiOperation({ summary: 'Update ChatBot' })
+  @ApiMixedResponse(ChatBot)
+  async update(
+    @Param('uuid') uuid: string,
+    @Body() updateChatBotDto: UpdateChatBotDto,
+  ) {
+    return this.chatBotService.update(uuid, updateChatBotDto);
+  }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.chatBotService.remove(+id);
-  // }
+  @Delete(':uuid')
+  @ApiOperation({ summary: 'Remove ChatBot' })
+  @ApiMixedResponse(ChatBot)
+  remove(@Param('uuid') uuid: string) {
+    return this.chatBotService.remove(uuid);
+  }
 }
