@@ -1,11 +1,11 @@
 # Based on https://www.tomray.dev/nestjs-docker-compose-postgres
 version: '3.8'
 services:
-  meta-gpt-bot-nestjs:
-    container_name: meta-gpt-bot-nestjs
+  metadata-gpt-nestjs:
+    container_name: metadata-gpt-nestjs
     depends_on:
-      - meta-gpt-bot-redis
-      - meta-gpt-bot-postgres
+      - metadata-gpt-redis
+      - metadata-gpt-postgres
     build:
       context: .
       # Only will build local stage from our dockerfile
@@ -20,8 +20,8 @@ services:
       - ${PORT}:${PORT}
       - 9229:9229
 
-  meta-gpt-bot-postgres:
-    container_name: meta-gpt-bot-postgres
+  metadata-gpt-postgres:
+    container_name: metadata-gpt-postgres
     image: postgres:16.0-alpine3.18
     restart: always
     environment:
@@ -31,18 +31,18 @@ services:
     ports:
       - '${LOCAL_POSTGRES_PORT}:5432'
     volumes:
-      - meta-gpt-bot-postgres:/var/lib/postgresql/data
+      - metadata-gpt-postgres:/var/lib/postgresql/data
 
-  meta-gpt-bot-redis:
-    container_name: meta-gpt-bot-redis
+  metadata-gpt-redis:
+    container_name: metadata-gpt-redis
     image: redis:7.2.1-alpine3.18
     ports:
       - 6379:6379
     volumes:
-      - meta-gpt-bot-redis:/data
+      - metadata-gpt-redis:/data
 
-  meta-gpt-bot-chroma:
-    container_name: meta-gpt-bot-meta-gpt-bot-chroma
+  metadata-gpt-chroma:
+    container_name: metadata-gpt-chroma
     image: ghcr.io/chroma-core/chroma:latest
     volumes:
       # Default configuration for persist_directory in chromadb/config.py
@@ -52,8 +52,8 @@ services:
       - 8000:8000
 
 volumes:
-  meta-gpt-bot-postgres:
-  meta-gpt-bot-redis:
+  metadata-gpt-postgres:
+  metadata-gpt-redis:
     driver: local
   meta_gpt_bot_chroma_persistent_folder:
     driver: local

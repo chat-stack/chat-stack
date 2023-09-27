@@ -9,7 +9,7 @@ export class AuthService {
 
   signServiceToken(serviceTokenPayload: IServiceTokenPayload): string {
     const serviceTokenPayloadToSign = {
-      iss: 'meta-gpt-bot',
+      iss: 'metadata-gpt',
       ...serviceTokenPayload,
     };
     if (serviceTokenPayloadToSign.iat) {
