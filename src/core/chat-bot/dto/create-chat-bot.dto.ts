@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { IsEnum, IsOptional, IsString } from 'class-validator';
 
-import { ChatBotType } from 'src/core/chat-bot/types/chatBotType.type';
+import { ChatBotMode } from 'src/core/chat-bot/types/chatBotType.type';
 
 export class CreateChatBotDto {
   @ApiProperty()
@@ -20,7 +20,7 @@ export class CreateChatBotDto {
   firstAssistantMessage?: string;
 
   @ApiProperty()
-  @IsEnum(ChatBotType)
+  @IsEnum(ChatBotMode)
   @IsOptional()
-  type: ChatBotType = ChatBotType.DEFAULT;
+  mode: ChatBotMode = ChatBotMode.DEFAULT;
 }

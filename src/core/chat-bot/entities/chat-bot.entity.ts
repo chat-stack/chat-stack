@@ -14,7 +14,7 @@ import { v4 as uuid } from 'uuid';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
 import { ChatSession } from 'src/core/chat-session/entities/chat-session.entity';
-import { ChatBotType } from 'src/core/chat-bot/types/chatBotType.type';
+import { ChatBotMode } from 'src/core/chat-bot/types/chatBotType.type';
 
 @Entity()
 export class ChatBot extends CustomBaseEntity<
@@ -52,10 +52,10 @@ export class ChatBot extends CustomBaseEntity<
 
   @ApiProperty()
   @Enum({
-    items: () => ChatBotType,
+    items: () => ChatBotMode,
     array: false,
-    default: ChatBotType.DEFAULT,
+    default: ChatBotMode.DEFAULT,
   })
   @Expose()
-  type: ChatBotType = ChatBotType.DEFAULT;
+  mode: ChatBotMode = ChatBotMode.DEFAULT;
 }
