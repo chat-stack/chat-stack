@@ -6,6 +6,7 @@ import {
   Query,
   Param,
   UseGuards,
+  UseFilters,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
@@ -17,6 +18,7 @@ import { JwtAuthGuard } from 'src/core/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/core/auth/guards/roles.guard';
 import { Roles } from 'src/core/auth/decorators/roles.decorator';
 import { Role } from 'src/common/types/role.type';
+import DatabaseExceptionFilter from 'src/common/exception-filters/database-exception.filter';
 
 import { ChatBotService } from './chat-bot.service';
 
@@ -37,6 +39,7 @@ export class ChatBotController {
   @Post()
   @ApiOperation({ summary: 'Create ChatBot' })
   @ApiMixedResponse(ChatBot)
+  @UseFilters(DatabaseExceptionFilter)
   async create(@Body() createChatBotDto: CreateChatBotDto): Promise<ChatBot> {
     return this.chatBotService.create(createChatBotDto);
   }
@@ -50,11 +53,11 @@ export class ChatBotController {
     return this.chatBotService.findPage(pageOptionsDto);
   }
 
-  @Get(':id')
+  @Get(':uuid')
   @ApiOperation({ summary: 'Get ChatBot' })
   @ApiMixedResponse(ChatBot)
-  findOne(@Param('id') id: string): Promise<ChatBot> {
-    return this.chatBotService.findOneOrFail(+id);
+  findOne(@Param('uuid') uuid: string): Promise<ChatBot> {
+    return this.chatBotService.findOneOrFail(uuid);
   }
 
   // @Patch(':id')

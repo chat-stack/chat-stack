@@ -1,4 +1,4 @@
-import { Injectable, PipeTransform, BadRequestException } from '@nestjs/common';
+import { Injectable, PipeTransform } from '@nestjs/common';
 
 @Injectable()
 export class TrimPipe implements PipeTransform {
@@ -6,7 +6,7 @@ export class TrimPipe implements PipeTransform {
     return typeof obj === 'object' && obj !== null;
   }
 
-  private trim(values) {
+  private trim(values: any) {
     Object.keys(values).forEach((key) => {
       if (key !== 'password') {
         if (this.isObj(values[key])) {
@@ -24,7 +24,6 @@ export class TrimPipe implements PipeTransform {
   transform(values: any) {
     if (this.isObj(values)) {
       return this.trim(values);
-    }
-    throw new BadRequestException('Validation failed (at trim pipe)');
+    } else return values;
   }
 }

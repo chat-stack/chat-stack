@@ -24,7 +24,11 @@ async function bootstrap() {
     }),
   );
   app.useGlobalPipes(new TrimPipe());
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  app.useGlobalInterceptors(
+    new ClassSerializerInterceptor(app.get(Reflector), {
+      strategy: 'excludeAll',
+    }),
+  );
   const config = new DocumentBuilder()
     .setTitle('MetaGPTBot API Docs')
     .setDescription('MetaGPTBot API Docs')

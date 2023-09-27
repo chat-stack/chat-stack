@@ -31,9 +31,9 @@ export class ChatService {
     getChatBotResponseDto: GetChatBotResponseDto,
   ) {
     const { endCustomerId } = userContext;
-    const { chatBotId, chatSessionDistinctId, userMessage, metadata } =
+    const { chatBotUuid, chatSessionDistinctId, userMessage, metadata } =
       getChatBotResponseDto;
-    const chatBot = await this.chatBotService.findOneOrFail(chatBotId);
+    const chatBot = await this.chatBotService.findOneOrFail(chatBotUuid);
     const endCustomer = endCustomerId
       ? await this.endCustomerService.findOneOrFail(endCustomerId)
       : undefined;
