@@ -14,5 +14,6 @@ export class CreateChatBotDto {
 
   @ApiProperty()
   @IsString()
-  firstAssistantMessage: string = 'How can I help you?';
+  @IsOptional()
+  firstAssistantMessage?: string;
 }

@@ -28,7 +28,7 @@ export class ChatBot extends CustomBaseEntity<
 
   @ApiProperty()
   @Property()
-  firstAssistantMessage: string = 'How can I help you?';
+  firstAssistantMessage?: string;
 
   @OneToMany(() => ChatSession, (chatSession) => chatSession.chatBot, {
     nullable: false,

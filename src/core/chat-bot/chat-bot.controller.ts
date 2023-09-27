@@ -35,13 +35,14 @@ export class ChatBotController {
   constructor(private readonly chatBotService: ChatBotService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a chat bot' })
+  @ApiOperation({ summary: 'Create ChatBot' })
   @ApiMixedResponse(ChatBot)
   async create(@Body() createChatBotDto: CreateChatBotDto): Promise<ChatBot> {
     return this.chatBotService.create(createChatBotDto);
   }
 
   @Get()
+  @ApiOperation({ summary: 'List ChatBots' })
   @ApiPaginatedResponse(ChatBot)
   async findAll(
     @Query() pageOptionsDto: PageOptionsDto,
@@ -50,6 +51,7 @@ export class ChatBotController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get ChatBot' })
   @ApiMixedResponse(ChatBot)
   findOne(@Param('id') id: string): Promise<ChatBot> {
     return this.chatBotService.findOneOrFail(+id);

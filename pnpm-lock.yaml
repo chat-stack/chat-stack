@@ -44,6 +44,9 @@ dependencies:
   '@nestjs/swagger':
     specifier: ^7.1.12
     version: 7.1.12(@nestjs/common@10.2.5)(@nestjs/core@10.2.5)(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)
+  chromadb:
+    specifier: ^1.5.11
+    version: 1.5.11
   class-transformer:
     specifier: ^0.5.1
     version: 0.5.1
@@ -52,7 +55,7 @@ dependencies:
     version: 0.14.0
   langchain:
     specifier: ^0.0.153
-    version: 0.0.153(pg@8.11.3)
+    version: 0.0.153(chromadb@1.5.11)(pg@8.11.3)
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
@@ -2501,6 +2504,23 @@ packages:
       fsevents: 2.3.3
     dev: true
 
+  /chromadb@1.5.11:
+    resolution: {integrity: sha512-mIg0DtWZFsf4hl05orRixIw3lBYKUc4AGydbUQVwd7sjwaCsgP1j0qHwYxoopj2H1L7yc8OUyFKhi79MoFMoMQ==}
+    engines: {node: '>=14.17.0'}
+    peerDependencies:
+      cohere-ai: ^5.0.0 || ^6.0.0
+      openai: ^3.0.0 || ^4.0.0
+    peerDependenciesMeta:
+      cohere-ai:
+        optional: true
+      openai:
+        optional: true
+    dependencies:
+      isomorphic-fetch: 3.0.0
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /chrome-trace-event@1.0.3:
     resolution: {integrity: sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==}
     engines: {node: '>=6.0'}
@@ -4198,6 +4218,15 @@ packages:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
     dev: true
 
+  /isomorphic-fetch@3.0.0:
+    resolution: {integrity: sha512-qvUtwJ3j6qwsF3jLxkZ72qCgjMysPzDfeV240JHiGZsANBYd+EEuu35v7dfrJ9Up0Ak07D7GGSkGhCHTqg/5wA==}
+    dependencies:
+      node-fetch: 2.7.0
+      whatwg-fetch: 3.6.19
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /istanbul-lib-coverage@3.2.0:
     resolution: {integrity: sha512-eOeJ5BHCmHYvQK7xt9GkdHuzuCGS1Y6g9Gvnx3Ym33fz/HpLRYxiS0wHNr+m/MBC8B647Xt608vCDEvhl9c6Mw==}
     engines: {node: '>=8'}
@@ -4851,7 +4880,7 @@ packages:
       - supports-color
     dev: false
 
-  /langchain@0.0.153(pg@8.11.3):
+  /langchain@0.0.153(chromadb@1.5.11)(pg@8.11.3):
     resolution: {integrity: sha512-CzNwKN8Zb6CM2nrnIj7vL+4zOpLdV6Bu9XzlUb6srpCpqb6CpzpEaLriZLZsF3ZWlOKGNDtxI8zYiDiSp6DzTA==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -5104,6 +5133,7 @@ packages:
       ansi-styles: 5.2.0
       binary-extensions: 2.2.0
       camelcase: 6.3.0
+      chromadb: 1.5.11
       decamelize: 1.2.0
       expr-eval: 2.0.2
       flat: 5.0.2
@@ -7032,6 +7062,10 @@ packages:
       - esbuild
       - uglify-js
     dev: true
+
+  /whatwg-fetch@3.6.19:
+    resolution: {integrity: sha512-d67JP4dHSbm2TrpFj8AbO8DnL1JXL5J9u0Kq2xW6d0TFDbCA3Muhdt8orXC22utleTVj7Prqt82baN6RBvnEgw==}
+    dev: false
 
   /whatwg-url@5.0.0:
     resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}

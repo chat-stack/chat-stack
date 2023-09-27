@@ -50,15 +50,17 @@ export class ChatSessionService {
           }),
         );
       }
-      chatHistories.push(
-        this.chatHistoryService.createFromSession({
-          chatSession,
-          chatRole: ChatRole.ASSISTANT,
-          message: chatBot.firstAssistantMessage,
-        }),
-      );
-      chatSession.chatHistories.set(chatHistories);
-      this.em.persistAndFlush(chatSession);
+      if (chatBot.firstAssistantMessage) {
+        chatHistories.push(
+          this.chatHistoryService.createFromSession({
+            chatSession,
+            chatRole: ChatRole.ASSISTANT,
+            message: chatBot.firstAssistantMessage,
+          }),
+        );
+        chatSession.chatHistories.set(chatHistories);
+        this.em.persistAndFlush(chatSession);
+      }
     }
     return chatSession;
   }

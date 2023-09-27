@@ -26,7 +26,7 @@ export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Message and get response from a chat bot' })
+  @ApiOperation({ summary: 'Message ChatBot and create Chat' })
   @ApiMixedResponse(ChatHistory)
   @HttpCode(200)
   async getChatBotResponse(
