@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   Collection,
   Entity,
+  Enum,
   Index,
   OneToMany,
   Property,
@@ -13,6 +14,7 @@ import { v4 as uuid } from 'uuid';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
 import { ChatSession } from 'src/core/chat-session/entities/chat-session.entity';
+import { ChatBotType } from 'src/core/chat-bot/types/chatBotType.type';
 
 @Entity()
 export class ChatBot extends CustomBaseEntity<
@@ -47,4 +49,13 @@ export class ChatBot extends CustomBaseEntity<
   })
   @Exclude()
   chatSessions = new Collection<ChatSession>(this);
+
+  @ApiProperty()
+  @Enum({
+    items: () => ChatBotType,
+    array: false,
+    default: ChatBotType.DEFAULT,
+  })
+  @Expose()
+  type: ChatBotType = ChatBotType.DEFAULT;
 }
