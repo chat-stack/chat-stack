@@ -1,11 +1,12 @@
 import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
 
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { EntityRepository, MikroORM, UseRequestContext } from '@mikro-orm/core';
+import { MikroORM, UseRequestContext } from '@mikro-orm/core';
 import { EntityManager } from '@mikro-orm/postgresql';
 
 import { Role } from 'src/common/types/role.type';
 import { AuthService } from 'src/core/auth/auth.service';
+import { CustomEntityRepository } from 'src/common/repositories/custom-entity-repository';
 
 import { ServiceTokenPayload } from './entities/service-token-payload.entity';
 import { IServiceTokenPayloadVerified } from './types/service-token-payload.interface';
@@ -16,7 +17,7 @@ export class ServiceTokenPayloadService implements OnApplicationBootstrap {
     private readonly orm: MikroORM,
     private readonly em: EntityManager,
     @InjectRepository(ServiceTokenPayload)
-    private readonly serviceTokenPayloadRepository: EntityRepository<ServiceTokenPayload>,
+    private readonly serviceTokenPayloadRepository: CustomEntityRepository<ServiceTokenPayload>,
     private readonly authService: AuthService,
   ) {}
 

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { EntityRepository } from '@mikro-orm/postgresql';
 import { FilterQuery, FindOptions } from '@mikro-orm/core';
+
+import { CustomEntityRepository } from 'src/common/repositories/custom-entity-repository';
 
 import { ChatHistory } from './entities/chat-history.entity';
 import { TCreateChatHistoryFromSessionOptions } from './types/create-chat-history-from-session-options.type';
@@ -11,7 +12,7 @@ import { TCreateChatHistoryFromSessionOptions } from './types/create-chat-histor
 export class ChatHistoryService {
   constructor(
     @InjectRepository(ChatHistory)
-    private readonly chatHistoryRepository: EntityRepository<ChatHistory>,
+    private readonly chatHistoryRepository: CustomEntityRepository<ChatHistory>,
   ) {}
 
   createFromSession(options: TCreateChatHistoryFromSessionOptions) {

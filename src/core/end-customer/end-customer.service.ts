@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { EntityRepository } from '@mikro-orm/core';
+
+import { CustomEntityRepository } from 'src/common/repositories/custom-entity-repository';
 
 import { EndCustomer } from './entities/end-customer.entity';
 
@@ -9,7 +10,7 @@ import { EndCustomer } from './entities/end-customer.entity';
 export class EndCustomerService {
   constructor(
     @InjectRepository(EndCustomer)
-    private readonly endCustomerRepository: EntityRepository<EndCustomer>,
+    private readonly endCustomerRepository: CustomEntityRepository<EndCustomer>,
   ) {}
 
   async findOneOrFail(id: number): Promise<EndCustomer> {

@@ -42,6 +42,7 @@ services:
       - meta-gpt-bot-redis:/data
 
   meta-gpt-bot-chroma:
+    container_name: meta-gpt-bot-meta-gpt-bot-chroma
     image: ghcr.io/chroma-core/chroma:latest
     volumes:
       # Default configuration for persist_directory in chromadb/config.py

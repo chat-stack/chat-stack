@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { EntityRepository, EntityManager } from '@mikro-orm/postgresql';
+import { EntityManager } from '@mikro-orm/postgresql';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Loaded } from '@mikro-orm/core';
 import { PromptTemplate } from 'langchain/prompts';
@@ -11,6 +11,7 @@ import { ChatBot } from 'src/core/chat-bot/entities/chat-bot.entity';
 import { ChatHistory } from 'src/core/chat-history/entities/chat-history.entity';
 import { EndCustomer } from 'src/core/end-customer/entities/end-customer.entity';
 import { convertRecordValueToString } from 'src/common/util/convert-record-value-to-string';
+import { CustomEntityRepository } from 'src/common/repositories/custom-entity-repository';
 
 import { ChatSession } from './entities/chat-session.entity';
 
@@ -18,7 +19,7 @@ import { ChatSession } from './entities/chat-session.entity';
 export class ChatSessionService {
   constructor(
     @InjectRepository(ChatSession)
-    private readonly chatSessionRepository: EntityRepository<ChatSession>,
+    private readonly chatSessionRepository: CustomEntityRepository<ChatSession>,
     private readonly em: EntityManager,
     private readonly chatHistoryService: ChatHistoryService,
   ) {}
