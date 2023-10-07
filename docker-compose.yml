@@ -40,20 +40,40 @@ services:
       - 6379:6379
     volumes:
       - metadata-gpt-redis:/data
-
-  metadata-gpt-chroma:
-    container_name: metadata-gpt-chroma
-    image: ghcr.io/chroma-core/chroma:latest
+  
+  metadata-gpt-opensearch:
+    image: opensearchproject/opensearch:2.6.0
+    container_name: metadata-gpt-opensearch
+    environment:
+      - cluster.name=metadata-gpt-opensearch
+      - node.name=metadata-gpt-opensearch
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "DISABLE_INSTALL_DEMO_CONFIG=true"
+      - "DISABLE_SECURITY_PLUGIN=true"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
-      # Default configuration for persist_directory in chromadb/config.py
-      # Currently it's located in "/chroma/chroma/"
-      - meta_gpt_bot_chroma_persistent_folder:/chroma/chroma/
+      - metadata_gpt_opensearch_data:/usr/share/metadata_gpt_opensearch/data
     ports:
-      - 8000:8000
+      - 9200:9200
+      - 9600:9600
+  metadata-gpt-opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:2.6.0 # Make sure the version of opensearch-dashboards matches the version of opensearch installed on other nodes
+    container_name: metadata-gpt-opensearch-dashboards
+    ports:
+      - 5601:5601 # Map host port 5601 to container port 5601
+    expose:
+      - "5601" # Expose port 5601 for web access to OpenSearch Dashboards
+    environment:
+      OPENSEARCH_HOSTS: '["http://metadata-gpt-opensearch:9200"]' # Define the OpenSearch nodes that OpenSearch Dashboards will query
+      DISABLE_SECURITY_DASHBOARDS_PLUGIN: "true" # disables security dashboards plugin in OpenSearch Dashboards
 
 volumes:
   metadata-gpt-postgres:
   metadata-gpt-redis:
     driver: local
-  meta_gpt_bot_chroma_persistent_folder:
-    driver: local
+  metadata_gpt_opensearch_data:

@@ -15,6 +15,8 @@ import { ChatHistoryModule } from './core/chat-history/chat-history.module';
 import { LangChainModule } from './core/lang-chain/lang-chain.module';
 import { ChatModule } from './core/chat/chat.module';
 import { EndCustomerModule } from './core/end-customer/end-customer.module';
+import { TextDocModule } from './core/text-doc/text-doc.module';
+import { RagModule } from './core/rag/rag.module';
 
 @Module({
   imports: [
@@ -36,6 +38,8 @@ import { EndCustomerModule } from './core/end-customer/end-customer.module';
     ChatHistoryModule,
     EndCustomerModule,
     LangChainModule,
+    RagModule,
+    TextDocModule,
   ],
   controllers: [AppController],
   providers: [AppService],

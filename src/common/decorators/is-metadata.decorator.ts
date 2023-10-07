@@ -1,13 +1,15 @@
+import { BadRequestException } from '@nestjs/common';
+
 import {
   registerDecorator,
   ValidationOptions,
   ValidationArguments,
 } from 'class-validator';
 
-export function IsRecord(validationOptions?: ValidationOptions) {
+export function isMetadata(validationOptions?: ValidationOptions) {
   return (object: any, propertyName: string) => {
     registerDecorator({
-      name: 'isRecord',
+      name: 'isMetadata',
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
@@ -20,6 +22,11 @@ export function IsRecord(validationOptions?: ValidationOptions) {
           for (const key in value) {
             if (typeof key !== 'string') {
               return false;
+            }
+            if (key === 'id') {
+              throw new BadRequestException(
+                `Metadata key 'id' is reserved for internal use`,
+              );
             }
           }
 

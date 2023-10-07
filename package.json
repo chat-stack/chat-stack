@@ -34,7 +34,7 @@
     "@nestjs/passport": "^10.0.2",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.1.12",
-    "chromadb": "^1.5.11",
+    "@opensearch-project/opensearch": "^2.4.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "langchain": "^0.0.153",

@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { IsOptional, IsString, IsUUID } from 'class-validator';
 
-import { IsRecord } from 'src/common/decorators/is-record.decorator';
+import { isMetadata } from 'src/common/decorators/is-metadata.decorator';
 
 export class GetChatBotResponseDto {
   @ApiProperty()
@@ -23,7 +23,7 @@ export class GetChatBotResponseDto {
   userMessage: string;
 
   @ApiProperty()
-  @IsRecord()
+  @isMetadata()
   @IsOptional()
   metadata?: Record<string, any>;
 }

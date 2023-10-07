@@ -6,6 +6,7 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { PageOptionsDto } from 'src/common/dto/page/page-option.dto';
 import { PageDto } from 'src/common/dto/page/page.dto';
 import { CustomEntityRepository } from 'src/common/repositories/custom-entity-repository';
+import { RagService } from 'src/core/rag/rag.service';
 
 import { ChatBot } from './entities/chat-bot.entity';
 import { CreateChatBotDto } from './dto/create-chat-bot.dto';
@@ -17,11 +18,15 @@ export class ChatBotService {
     private readonly em: EntityManager,
     @InjectRepository(ChatBot)
     private readonly chatBotRepository: CustomEntityRepository<ChatBot>,
+    private readonly ragService: RagService,
   ) {}
 
   async create(createChatBotDto: CreateChatBotDto): Promise<ChatBot> {
     const chatBot = this.chatBotRepository.create(createChatBotDto);
     await this.em.persistAndFlush(chatBot);
+    if (chatBot.rag) {
+      await this.ragService.loadToVectorStore(chatBot.rag);
+    }
     return chatBot;
   }
 

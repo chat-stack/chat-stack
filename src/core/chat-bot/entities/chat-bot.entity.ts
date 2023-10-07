@@ -1,11 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 import {
+  Cascade,
   Collection,
   Entity,
   Enum,
   Index,
   OneToMany,
+  OneToOne,
   Property,
   Unique,
 } from '@mikro-orm/core';
@@ -15,6 +17,7 @@ import { v4 as uuid } from 'uuid';
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
 import { ChatSession } from 'src/core/chat-session/entities/chat-session.entity';
 import { ChatBotMode } from 'src/core/chat-bot/types/chatBotType.type';
+import { Rag } from 'src/core/rag/entities/rag.entity';
 
 @Entity()
 export class ChatBot extends CustomBaseEntity<
@@ -45,6 +48,8 @@ export class ChatBot extends CustomBaseEntity<
   firstAssistantMessage?: string;
 
   @OneToMany(() => ChatSession, (chatSession) => chatSession.chatBot, {
+    cascade: [Cascade.ALL],
+    orphanRemoval: true,
     nullable: false,
   })
   @Exclude()
@@ -58,4 +63,11 @@ export class ChatBot extends CustomBaseEntity<
   })
   @Expose()
   mode: ChatBotMode = ChatBotMode.DEFAULT;
+
+  @OneToOne(() => Rag, {
+    nullable: true,
+    cascade: [Cascade.ALL],
+    orphanRemoval: true,
+  })
+  rag?: Rag;
 }
