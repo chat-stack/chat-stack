@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 
 import { EntityManager } from '@mikro-orm/postgresql';
 import { QueryOrder } from '@mikro-orm/core';
+import { ChainValues } from 'langchain/schema';
 
 import { ChatBotService } from 'src/core/chat-bot/chat-bot.service';
 import { ChatSessionService } from 'src/core/chat-session/chat-session.service';
@@ -12,6 +13,7 @@ import { EndCustomerService } from 'src/core/end-customer/end-customer.service';
 import { LangChainService } from 'src/core/lang-chain/lang-chain.service';
 import { TLangChainConfig } from 'src/config/types/lang-chain.config.type';
 import { IUserContext } from 'src/core/auth/types/user-context.interface';
+import { ChatBotMode } from 'src/core/chat-bot/types/chatBotType.type';
 
 import { GetChatBotResponseDto } from './dto/get-chat-bot-response.dto';
 
@@ -63,12 +65,34 @@ export class ChatService {
       },
     );
     const chatHistories = chatHistoriesRevert.sort((a, b) => b.id - a.id);
-    const llmChain = this.langChainService.createLLMChain({
-      memory: this.langChainService.createBufferWindowMemory(chatHistories),
-    });
-    const result = await llmChain.call({
-      input: userMessage,
-    });
+    let result: ChainValues;
+    if (chatBot.mode === ChatBotMode.RAG) {
+      const vectorStore = this.langChainService.createVectorStore({
+        indexName: `${chatBot.uuid}-rag`,
+      });
+      const chain =
+        this.langChainService.createConversationalRetrievalQAChainFromLLM(
+          vectorStore.asRetriever(),
+          undefined,
+          {
+            memory:
+              this.langChainService.createBufferWindowMemory(chatHistories),
+            inputKey: 'question',
+            outputKey: 'text',
+            verbose: true,
+          },
+        );
+      result = await chain.call({
+        question: userMessage,
+      });
+    } else {
+      const chain = this.langChainService.createLLMChain({
+        memory: this.langChainService.createBufferWindowMemory(chatHistories),
+      });
+      result = await chain.call({
+        input: userMessage,
+      });
+    }
     const assistantChatHistory = this.chatHistoryService.createFromSession({
       chatSession,
       chatRole: ChatRole.ASSISTANT,
