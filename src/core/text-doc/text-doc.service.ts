@@ -32,6 +32,7 @@ export class TextDocService {
     this.textDocQueue.addBulk(
       documents.map((document) => {
         const jobData: ITextDocJobData = {
+          id: document.metadata.id,
           document,
           indexName,
         };

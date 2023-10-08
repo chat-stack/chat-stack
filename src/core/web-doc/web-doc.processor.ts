@@ -5,14 +5,24 @@ import { Document } from 'langchain/document';
 import { PuppeteerWebBaseLoader } from 'langchain/document_loaders/web/puppeteer';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { HtmlToTextTransformer } from 'langchain/document_transformers/html_to_text';
+import { MikroORM, EntityManager, wrap } from '@mikro-orm/core';
+import { InjectRepository } from '@mikro-orm/nestjs';
 
 import { LangChainService } from 'src/core/lang-chain/lang-chain.service';
+import { CustomEntityRepository } from 'src/common/repositories/custom-entity-repository';
 
 import { IWebDocJobData } from './types/web-doc-job-data.interface';
+import { WebDoc } from './entities/web-doc.entity';
 
 @Processor('textDoc')
 export class WebDocProcessor {
-  constructor(private readonly langChainService: LangChainService) {}
+  constructor(
+    private readonly orm: MikroORM, // usage with @UseRequestContext()
+    private readonly em: EntityManager,
+    @InjectRepository(WebDoc)
+    private readonly webDocRepository: CustomEntityRepository<WebDoc>,
+    private readonly langChainService: LangChainService,
+  ) {}
 
   @Process('webDoc.loadToVectorStore')
   async loadToVectorStore(job: Job) {
@@ -36,7 +46,7 @@ export class WebDocProcessor {
     const newDocs = (await sequence.invoke(docs)).filter(
       (doc) => doc.pageContent,
     );
-    return vectorStore.addDocuments(
+    await vectorStore.addDocuments(
       newDocs.map((newDoc): Document<Record<string, any>> => {
         return {
           pageContent: newDoc.pageContent,
@@ -48,5 +58,12 @@ export class WebDocProcessor {
         };
       }),
     );
+    const webDoc = await this.webDocRepository.findOne(id);
+    if (webDoc) {
+      wrap(webDoc).assign({
+        loadedAt: new Date(),
+      });
+      await this.em.persistAndFlush(webDoc);
+    }
   }
 }
