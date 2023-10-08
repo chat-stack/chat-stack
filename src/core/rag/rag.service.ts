@@ -25,6 +25,5 @@ export class RagService {
       rag.webDocs.getItems(),
       indexName,
     );
-    await this.em.flush();
   }
 }
