@@ -1,13 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString, IsUrl } from 'class-validator';
 
 import { isMetadata } from 'src/common/decorators/is-metadata.decorator';
 
-export class CreateTextDocDto {
+export class CreateWebDocDto {
   @ApiProperty()
+  @IsUrl()
   @IsString()
-  pageContent: string;
+  url: string;
 
   @ApiProperty()
   @isMetadata()

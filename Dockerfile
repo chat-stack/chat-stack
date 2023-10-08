@@ -10,8 +10,14 @@ FROM node:20.7-alpine3.17 As local
 # Create app directory
 WORKDIR /usr/src/app
 
+
+# Install Chromium (for Puppeteer and other headless browser tasks)
+RUN apk update && apk add --no-cache chromium chromium-chromedriver
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+ENV CHROMIUM_BIN=/usr/bin/chromium-browser
+
 # Copy application dependency manifests to the container image.
-# A wildcard is used to ensure copying both package.json AND package-lock.json (when available).
 # Copying this first prevents re-running pnpm install on every code change.
 COPY --chown=node:node package.json pnpm-lock.yaml* ./
 

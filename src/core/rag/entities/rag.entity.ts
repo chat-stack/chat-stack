@@ -9,6 +9,7 @@ import {
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
 import { ChatBot } from 'src/core/chat-bot/entities/chat-bot.entity';
 import { TextDoc } from 'src/core/text-doc/entities/text-doc.entity';
+import { WebDoc } from 'src/core/web-doc/entities/web-doc.entity';
 
 @Entity()
 export class Rag extends CustomBaseEntity<Rag, undefined> {
@@ -23,4 +24,11 @@ export class Rag extends CustomBaseEntity<Rag, undefined> {
     orphanRemoval: true,
   })
   textDocs = new Collection<TextDoc>(this);
+
+  @OneToMany(() => WebDoc, (webDoc) => webDoc.rag, {
+    nullable: true,
+    cascade: [Cascade.ALL],
+    orphanRemoval: true,
+  })
+  webDocs = new Collection<WebDoc>(this);
 }

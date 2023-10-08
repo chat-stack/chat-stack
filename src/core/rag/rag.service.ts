@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
-import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
-import { Document } from 'langchain/dist/document';
 import { EntityManager } from '@mikro-orm/postgresql';
-import { OpenSearchVectorStore } from 'langchain/vectorstores/opensearch';
-import { Client as OpenSearchClient } from '@opensearch-project/opensearch';
+
+import { TextDocService } from 'src/core/text-doc/text-doc.service';
+import { WebDocService } from 'src/core/web-doc/web-doc.service';
 
 import { Rag } from './entities/rag.entity';
 
@@ -12,24 +11,24 @@ import { Rag } from './entities/rag.entity';
 export class RagService {
   constructor(
     private readonly em: EntityManager,
-    private readonly embeddings: OpenAIEmbeddings,
-    private readonly openSearchClient: OpenSearchClient,
+    private readonly textDocService: TextDocService,
+    private readonly webDocService: WebDocService,
   ) {}
   async loadToVectorStore(rag: Rag) {
-    await this.em.populate(rag, ['chatBot', 'textDocs']);
-    const vectorStore = new OpenSearchVectorStore(this.embeddings, {
-      client: this.openSearchClient,
-      indexName: `${rag.chatBot.uuid}-rag`,
-    });
-    const docs = rag.textDocs.getItems().map((textDoc): Document => {
-      return {
-        pageContent: textDoc.pageContent,
-        metadata: {
-          ...textDoc.metadata,
-          id: textDoc.id,
-        },
-      };
-    });
-    await vectorStore.addDocuments(docs);
+    await this.em.populate(rag, ['chatBot', 'textDocs', 'webDocs']);
+    const indexName = `${rag.chatBot.uuid}-rag`;
+    await this.textDocService.loadToVectorStoreBulk(
+      rag.textDocs.getItems(),
+      indexName,
+    );
+    await this.webDocService.loadToVectorStoreBulk(
+      rag.webDocs.getItems(),
+      indexName,
+    );
+    // for (const textDoc of rag.textDocs.getItems()) {
+    //   textDoc.loadedAt = new Date();
+    //   this.em.persist(textDoc);
+    // }
+    await this.em.flush();
   }
 }
