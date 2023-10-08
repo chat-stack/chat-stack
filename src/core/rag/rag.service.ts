@@ -25,10 +25,6 @@ export class RagService {
       rag.webDocs.getItems(),
       indexName,
     );
-    // for (const textDoc of rag.textDocs.getItems()) {
-    //   textDoc.loadedAt = new Date();
-    //   this.em.persist(textDoc);
-    // }
     await this.em.flush();
   }
 }
