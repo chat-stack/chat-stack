@@ -8,12 +8,83 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import * as fs from 'fs';
 
+import {
+  utilities as nestWinstonModuleUtilities,
+  WinstonModule,
+} from 'nest-winston';
+import { createLogger, format, LoggerOptions, transports } from 'winston';
+
 import { AppModule } from './app.module';
 
 import { TrimPipe } from './common/pipes/trim.pipe';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const sharedOptions: LoggerOptions = {
+    level: 'debug',
+    format: format.combine(
+      format.timestamp(),
+      format.ms(),
+      nestWinstonModuleUtilities.format.nestLike(
+        `metadata-gpt-server ${process.env.NODE_ENV}`,
+        {
+          colors: true,
+          prettyPrint: true,
+        },
+      ),
+    ),
+    silent: false,
+    handleExceptions: true,
+    handleRejections: true,
+  };
+  let instance = createLogger({
+    ...sharedOptions,
+    transports: [
+      new transports.Console(sharedOptions),
+      new transports.File({
+        ...sharedOptions,
+        filename: 'nestjs.log',
+        format: format.combine(
+          format.timestamp(),
+          format.ms(),
+          nestWinstonModuleUtilities.format.nestLike(
+            `metadata-gpt-server ${process.env.NODE_ENV}`,
+            {
+              colors: false,
+              prettyPrint: true,
+            },
+          ),
+        ),
+      }),
+    ],
+    exitOnError: false,
+  });
+  if (process.env.NODE_ENV !== 'local') {
+    instance = createLogger({
+      level: 'info',
+      format: format.combine(format.timestamp(), format.ms(), format.json()),
+      transports: [
+        new transports.Console({
+          ...sharedOptions,
+          format: format.combine(
+            format.timestamp(),
+            format.ms(),
+            nestWinstonModuleUtilities.format.nestLike(
+              `metadata-gpt-server ${process.env.NODE_ENV}`,
+              {
+                colors: false,
+                prettyPrint: true,
+              },
+            ),
+          ),
+        }),
+      ],
+    });
+  }
+  const app = await NestFactory.create(AppModule, {
+    logger: WinstonModule.createLogger({
+      instance,
+    }),
+  });
   app.enableVersioning({
     type: VersioningType.URI,
   });
