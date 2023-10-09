@@ -101,8 +101,8 @@ async function bootstrap() {
     }),
   );
   const config = new DocumentBuilder()
-    .setTitle('MetaGPTBot API Docs')
-    .setDescription('MetaGPTBot API Docs')
+    .setTitle('MetadataGPT API Docs')
+    .setDescription('MetadataGPT API Docs')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
