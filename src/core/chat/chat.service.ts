@@ -99,6 +99,6 @@ export class ChatService {
       message: result.text,
     });
     await this.em.persistAndFlush(assistantChatHistory);
-    return result;
+    return JSON.stringify(result);
   }
 }
