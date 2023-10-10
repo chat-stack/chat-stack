@@ -1,11 +1,17 @@
 import { Process, Processor } from '@nestjs/bull';
+import { Logger } from '@nestjs/common';
 
 import { Job } from 'bull';
 import { Document } from 'langchain/document';
 import { PuppeteerWebBaseLoader } from 'langchain/document_loaders/web/puppeteer';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { HtmlToTextTransformer } from 'langchain/document_transformers/html_to_text';
-import { MikroORM, EntityManager, wrap } from '@mikro-orm/core';
+import {
+  MikroORM,
+  EntityManager,
+  wrap,
+  UseRequestContext,
+} from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 
 import { LangChainService } from 'src/core/lang-chain/lang-chain.service';
@@ -14,7 +20,7 @@ import { CustomEntityRepository } from 'src/common/repositories/custom-entity-re
 import { IWebDocJobData } from './types/web-doc-job-data.interface';
 import { WebDoc } from './entities/web-doc.entity';
 
-@Processor('textDoc')
+@Processor('webDoc')
 export class WebDocProcessor {
   constructor(
     private readonly orm: MikroORM, // usage with @UseRequestContext()
@@ -22,9 +28,11 @@ export class WebDocProcessor {
     @InjectRepository(WebDoc)
     private readonly webDocRepository: CustomEntityRepository<WebDoc>,
     private readonly langChainService: LangChainService,
+    private readonly logger: Logger,
   ) {}
 
   @Process('webDoc.loadToVectorStore')
+  @UseRequestContext()
   async loadToVectorStore(job: Job) {
     const { id, url, metadata, indexName } = job.data as IWebDocJobData;
     const vectorStore = this.langChainService.createVectorStore({
@@ -64,6 +72,11 @@ export class WebDocProcessor {
         loadedAt: new Date(),
       });
       await this.em.persistAndFlush(webDoc);
+      this.logger.log({
+        message: `Finished loading textDoc ${webDoc.id}`,
+        id: webDoc.id,
+        url: webDoc.url,
+      });
     }
   }
 }

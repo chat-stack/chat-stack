@@ -14,7 +14,7 @@ export class WebDocService {
   ) {}
 
   async loadToVectorStoreBulk(webDocs: WebDoc[], indexName: string) {
-    this.webDocQueue.addBulk(
+    return this.webDocQueue.addBulk(
       webDocs.map((webDoc) => {
         const jobData: IWebDocJobData = {
           id: webDoc.id,

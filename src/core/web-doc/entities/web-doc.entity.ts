@@ -25,5 +25,5 @@ export class WebDoc extends CustomBaseEntity<WebDoc, 'metadata' | 'loadedAt'> {
 
   @ApiProperty()
   @Property()
-  loadedAt: Date;
+  loadedAt?: Date;
 }

@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { BullModule, BullRootModuleOptions } from '@nestjs/bull';
 
 import { MikroOrmModule, MikroOrmModuleSyncOptions } from '@mikro-orm/nestjs';
 
@@ -17,18 +18,28 @@ import { ChatModule } from './core/chat/chat.module';
 import { EndCustomerModule } from './core/end-customer/end-customer.module';
 import { TextDocModule } from './core/text-doc/text-doc.module';
 import { RagModule } from './core/rag/rag.module';
+import bullConfig from './config/bull.config';
+import langChainConfig from './config/lang-chain.config';
+import { WebDocModule } from './core/web-doc/web-doc.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [dbConfig],
+      load: [dbConfig, bullConfig, langChainConfig],
     }),
     MikroOrmModule.forRootAsync({
       imports: [ConfigModule, AuthModule, ServiceTokenPayloadModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
         return configService.get<MikroOrmModuleSyncOptions>('database')!;
+      },
+    }),
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        return configService.get<BullRootModuleOptions>('bull')!;
       },
     }),
     ServiceTokenPayloadModule,
@@ -40,6 +51,7 @@ import { RagModule } from './core/rag/rag.module';
     LangChainModule,
     RagModule,
     TextDocModule,
+    WebDocModule,
   ],
   controllers: [AppController],
   providers: [AppService],

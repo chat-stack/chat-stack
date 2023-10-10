@@ -1,4 +1,5 @@
 import { Process, Processor } from '@nestjs/bull';
+import { Logger } from '@nestjs/common';
 
 import { Job } from 'bull';
 import { InjectRepository } from '@mikro-orm/nestjs';
@@ -19,10 +20,11 @@ export class TextDocProcessor {
     @InjectRepository(TextDoc)
     private readonly textDocRepository: CustomEntityRepository<TextDoc>,
     private readonly langChainService: LangChainService,
+    private readonly logger: Logger,
   ) {}
 
-  @UseRequestContext()
   @Process('textDoc.loadToVectorStore')
+  @UseRequestContext()
   async loadToVectorStore(job: Job) {
     const { id, document, indexName } = job.data as ITextDocJobData;
     const vectorStore = this.langChainService.createVectorStore({
@@ -35,6 +37,10 @@ export class TextDocProcessor {
         loadedAt: new Date(),
       });
       await this.em.persistAndFlush(textDoc);
+      this.logger.log({
+        message: `Finished loading textDoc ${textDoc.id}`,
+        id: textDoc.id,
+      });
     }
   }
 }

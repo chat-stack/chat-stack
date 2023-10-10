@@ -29,7 +29,7 @@ export class TextDocService {
         },
       });
     });
-    this.textDocQueue.addBulk(
+    return this.textDocQueue.addBulk(
       documents.map((document) => {
         const jobData: ITextDocJobData = {
           id: document.metadata.id,

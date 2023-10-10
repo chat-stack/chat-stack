@@ -37,10 +37,10 @@ services:
     container_name: metadata-gpt-redis
     image: redis:7.2.1-alpine3.18
     ports:
-      - 6379:6379
+      - ${REDIS_PORT}:${REDIS_PORT}
     volumes:
       - metadata-gpt-redis:/data
-  
+
   metadata-gpt-opensearch:
     image: opensearchproject/opensearch:2.6.0
     container_name: metadata-gpt-opensearch

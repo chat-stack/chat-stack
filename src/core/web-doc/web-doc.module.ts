@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bull';
 
 import { MikroOrmModule } from '@mikro-orm/nestjs';
@@ -20,7 +20,16 @@ import { WebDoc } from './entities/web-doc.entity';
     LangChainModule,
   ],
   controllers: [WebDocController],
-  providers: [WebDocService, WebDocProcessor],
+  providers: [
+    WebDocService,
+    WebDocProcessor,
+    {
+      provide: Logger,
+      useFactory: async () => {
+        return new Logger(WebDocModule.name);
+      },
+    },
+  ],
   exports: [WebDocService],
 })
 export class WebDocModule {}

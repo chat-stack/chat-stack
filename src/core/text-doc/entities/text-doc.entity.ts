@@ -28,5 +28,5 @@ export class TextDoc extends CustomBaseEntity<
 
   @ApiProperty()
   @Property()
-  loadedAt: Date;
+  loadedAt?: Date;
 }

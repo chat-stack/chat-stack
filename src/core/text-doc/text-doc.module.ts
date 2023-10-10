@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bull';
 
 import { MikroOrmModule } from '@mikro-orm/nestjs';
@@ -20,7 +20,16 @@ import { TextDoc } from './entities/text-doc.entity';
     LangChainModule,
   ],
   controllers: [TextDocController],
-  providers: [TextDocService, TextDocProcessor],
+  providers: [
+    TextDocService,
+    TextDocProcessor,
+    {
+      provide: Logger,
+      useFactory: async () => {
+        return new Logger(TextDocModule.name);
+      },
+    },
+  ],
   exports: [TextDocService],
 })
 export class TextDocModule {}
