@@ -9,7 +9,7 @@ import { AuthService } from 'src/core/auth/auth.service';
 import { CustomEntityRepository } from 'src/common/repositories/custom-entity-repository';
 
 import { ServiceTokenPayload } from './entities/service-token-payload.entity';
-import { IServiceTokenPayloadVerified } from './types/service-token-payload.interface';
+import { IServiceTokenPayloadVerified } from './interfaces/service-token-payload.interface';
 
 @Injectable()
 export class ServiceTokenPayloadService implements OnApplicationBootstrap {

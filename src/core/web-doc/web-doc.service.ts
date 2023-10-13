@@ -4,7 +4,7 @@ import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 
 import { WebDoc } from './entities/web-doc.entity';
-import { IWebDocJobData } from './types/web-doc-job-data.interface';
+import { IWebDocJobData } from './interfaces/web-doc-job-data.interface';
 
 @Injectable()
 export class WebDocService {

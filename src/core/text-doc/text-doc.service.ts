@@ -8,7 +8,7 @@ import { Document } from 'langchain/document';
 import { CustomEntityRepository } from 'src/common/repositories/custom-entity-repository';
 
 import { TextDoc } from './entities/text-doc.entity';
-import { ITextDocJobData } from './types/text-doc-job-data.interface';
+import { ITextDocJobData } from './interfaces/text-doc-job-data.interface';
 
 @Injectable()
 export class TextDocService {

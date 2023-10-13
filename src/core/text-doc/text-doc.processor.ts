@@ -9,7 +9,7 @@ import { EntityManager } from '@mikro-orm/postgresql';
 import { LangChainService } from 'src/core/lang-chain/lang-chain.service';
 import { CustomEntityRepository } from 'src/common/repositories/custom-entity-repository';
 
-import { ITextDocJobData } from './types/text-doc-job-data.interface';
+import { ITextDocJobData } from './interfaces/text-doc-job-data.interface';
 import { TextDoc } from './entities/text-doc.entity';
 
 @Processor('textDoc')

@@ -4,8 +4,8 @@ import { ConfigService } from '@nestjs/config';
 
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
-import { IJwtPayload } from 'src/core/auth/types/jwt-payload.interface';
-import { IUserContext } from 'src/core/auth/types/user-context.interface';
+import { IJwtPayload } from 'src/core/auth/interfaces/jwt-payload.interface';
+import { IUserContext } from 'src/core/auth/interfaces/user-context.interface';
 
 @Injectable()
 export class JwtAuthStrategy extends PassportStrategy(

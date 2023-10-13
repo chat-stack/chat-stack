@@ -17,7 +17,7 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { LangChainService } from 'src/core/lang-chain/lang-chain.service';
 import { CustomEntityRepository } from 'src/common/repositories/custom-entity-repository';
 
-import { IWebDocJobData } from './types/web-doc-job-data.interface';
+import { IWebDocJobData } from './interfaces/web-doc-job-data.interface';
 import { WebDoc } from './entities/web-doc.entity';
 
 @Processor('webDoc')

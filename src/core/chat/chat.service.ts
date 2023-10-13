@@ -5,6 +5,8 @@ import { EntityManager } from '@mikro-orm/postgresql';
 import { QueryOrder } from '@mikro-orm/core';
 import { ChainValues } from 'langchain/schema';
 
+import { IUserContext } from 'src/core/auth/interfaces/user-context.interface';
+
 import { ChatBotService } from 'src/core/chat-bot/chat-bot.service';
 import { ChatSessionService } from 'src/core/chat-session/chat-session.service';
 import { ChatHistoryService } from 'src/core/chat-history/chat-history.service';
@@ -12,7 +14,6 @@ import { ChatRole } from 'src/common/types/chat-role.type';
 import { EndCustomerService } from 'src/core/end-customer/end-customer.service';
 import { LangChainService } from 'src/core/lang-chain/lang-chain.service';
 import { TLangChainConfig } from 'src/config/types/lang-chain.config.type';
-import { IUserContext } from 'src/core/auth/types/user-context.interface';
 import { ChatBotMode } from 'src/core/chat-bot/types/chatBotType.type';
 
 import { GetChatBotResponseDto } from './dto/get-chat-bot-response.dto';
