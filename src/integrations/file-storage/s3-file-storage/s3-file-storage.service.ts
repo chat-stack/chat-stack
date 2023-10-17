@@ -14,6 +14,8 @@ import {
   IWriteFileOptions,
 } from 'src/integrations/file-storage/interfaces/file-storage.interface';
 
+import { DEFAULT_DIRECTORY_PATH } from 'src/integrations/file-storage/constants';
+
 @Injectable()
 export class S3FileStorageService implements IFileStorage {
   private bucketName = 'examplebucket';
@@ -21,7 +23,7 @@ export class S3FileStorageService implements IFileStorage {
   constructor(private readonly s3Client: S3Client) {}
 
   async writeFile({
-    directoryPath,
+    directoryPath = DEFAULT_DIRECTORY_PATH,
     filename,
     fileContent,
     mimeType,
@@ -37,7 +39,7 @@ export class S3FileStorageService implements IFileStorage {
   }
 
   async readFile({
-    directoryPath,
+    directoryPath = DEFAULT_DIRECTORY_PATH,
     filename,
   }: IReadFileOptions): Promise<Readable> {
     const command = new GetObjectCommand({

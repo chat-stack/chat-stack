@@ -21,6 +21,10 @@ import { RagModule } from './core/rag/rag.module';
 import bullConfig from './config/bull.config';
 import langChainConfig from './config/lang-chain.config';
 import { WebDocModule } from './core/web-doc/web-doc.module';
+import { FileDocModule } from './core/file-doc/file-doc.module';
+import { FileUploadModule } from './core/file-upload/file-upload.module';
+import { FileModule } from './core/file/file.module';
+import { FileStorageModule } from './integrations/file-storage/file-storage.module';
 
 @Module({
   imports: [
@@ -52,6 +56,10 @@ import { WebDocModule } from './core/web-doc/web-doc.module';
     RagModule,
     TextDocModule,
     WebDocModule,
+    FileDocModule,
+    FileUploadModule,
+    FileModule,
+    FileStorageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

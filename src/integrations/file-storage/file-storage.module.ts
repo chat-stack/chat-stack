@@ -33,5 +33,6 @@ import { S3FileStorageService } from './s3-file-storage/s3-file-storage.service'
       inject: [ConfigService, S3Client],
     },
   ],
+  exports: [FileStorageService],
 })
 export class FileStorageModule {}

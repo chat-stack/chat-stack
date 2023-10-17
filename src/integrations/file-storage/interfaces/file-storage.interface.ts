@@ -1,14 +1,14 @@
 import { Readable } from 'stream';
 
 export interface IWriteFileOptions {
-  directoryPath: string;
+  directoryPath?: string;
   filename: string;
   fileContent: Buffer | Uint8Array | string;
   mimeType: string | undefined;
 }
 
 export interface IReadFileOptions {
-  directoryPath: string;
+  directoryPath?: string;
   filename: string;
 }
 

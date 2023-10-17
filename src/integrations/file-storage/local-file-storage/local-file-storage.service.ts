@@ -10,6 +10,9 @@ import {
   IWriteFileOptions,
 } from 'src/integrations/file-storage/interfaces/file-storage.interface';
 
+import { DEFAULT_DIRECTORY_PATH } from 'src/integrations/file-storage/constants';
+import DeepLog from 'src/common/util/deep-log';
+
 @Injectable()
 export class LocalFileStorageService implements IFileStorage {
   async mkdir(path: string) {
@@ -23,12 +26,19 @@ export class LocalFileStorageService implements IFileStorage {
   }
 
   async writeFile({
-    directoryPath,
+    directoryPath = DEFAULT_DIRECTORY_PATH,
     filename,
     fileContent,
   }: IWriteFileOptions): Promise<void> {
+    DeepLog({
+      directoryPath,
+      filename,
+    });
     const filePath = path.join(`uploads/`, directoryPath, filename);
     const folderPath = path.dirname(filePath);
+
+    DeepLog(folderPath);
+    DeepLog('James');
 
     await this.mkdir(folderPath);
 
@@ -38,7 +48,7 @@ export class LocalFileStorageService implements IFileStorage {
   }
 
   async readFile({
-    directoryPath,
+    directoryPath = DEFAULT_DIRECTORY_PATH,
     filename,
   }: IReadFileOptions): Promise<Readable> {
     const filePath = path.join(`uploads/`, directoryPath, filename);

@@ -18,7 +18,7 @@ export class WebDoc extends CustomBaseEntity<WebDoc, 'metadata' | 'loadedAt'> {
   @ApiProperty()
   @Index({
     name: 'web_doc_metadata_index',
-    expression: `CREATE INDEX web_doc_metadata_index ON text_doc USING gin (metadata)`,
+    expression: `CREATE INDEX web_doc_metadata_index ON web_doc USING gin (metadata)`,
   })
   @Property({ type: 'jsonb' })
   metadata?: Record<string, any>;
