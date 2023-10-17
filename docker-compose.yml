@@ -1,11 +1,11 @@
 # Based on https://www.tomray.dev/nestjs-docker-compose-postgres
 version: '3.8'
 services:
-  metadata-gpt-nestjs:
-    container_name: metadata-gpt-nestjs
+  chat-stack-nestjs:
+    container_name: chat-stack-nestjs
     depends_on:
-      - metadata-gpt-redis
-      - metadata-gpt-postgres
+      - chat-stack-redis
+      - chat-stack-postgres
     build:
       context: .
       # Only will build local stage from our dockerfile
@@ -20,8 +20,8 @@ services:
       - ${PORT}:${PORT}
       - 9229:9229
 
-  metadata-gpt-postgres:
-    container_name: metadata-gpt-postgres
+  chat-stack-postgres:
+    container_name: chat-stack-postgres
     image: postgres:16.0-alpine3.18
     restart: always
     environment:
@@ -31,22 +31,22 @@ services:
     ports:
       - '${LOCAL_POSTGRES_PORT}:5432'
     volumes:
-      - metadata-gpt-postgres:/var/lib/postgresql/data
+      - chat-stack-postgres:/var/lib/postgresql/data
 
-  metadata-gpt-redis:
-    container_name: metadata-gpt-redis
+  chat-stack-redis:
+    container_name: chat-stack-redis
     image: redis:7.2.1-alpine3.18
     ports:
       - ${REDIS_PORT}:${REDIS_PORT}
     volumes:
-      - metadata-gpt-redis:/data
+      - chat-stack-redis:/data
 
-  metadata-gpt-opensearch:
+  chat-stack-opensearch:
     image: opensearchproject/opensearch:2.6.0
-    container_name: metadata-gpt-opensearch
+    container_name: chat-stack-opensearch
     environment:
-      - cluster.name=metadata-gpt-opensearch
-      - node.name=metadata-gpt-opensearch
+      - cluster.name=chat-stack-opensearch
+      - node.name=chat-stack-opensearch
       - discovery.type=single-node
       - bootstrap.memory_lock=true
       - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
@@ -61,19 +61,19 @@ services:
     ports:
       - 9200:9200
       - 9600:9600
-  metadata-gpt-opensearch-dashboards:
+  chat-stack-opensearch-dashboards:
     image: opensearchproject/opensearch-dashboards:2.6.0 # Make sure the version of opensearch-dashboards matches the version of opensearch installed on other nodes
-    container_name: metadata-gpt-opensearch-dashboards
+    container_name: chat-stack-opensearch-dashboards
     ports:
       - 5601:5601 # Map host port 5601 to container port 5601
     expose:
       - "5601" # Expose port 5601 for web access to OpenSearch Dashboards
     environment:
-      OPENSEARCH_HOSTS: '["http://metadata-gpt-opensearch:9200"]' # Define the OpenSearch nodes that OpenSearch Dashboards will query
+      OPENSEARCH_HOSTS: '["http://chat-stack-opensearch:9200"]' # Define the OpenSearch nodes that OpenSearch Dashboards will query
       DISABLE_SECURITY_DASHBOARDS_PLUGIN: "true" # disables security dashboards plugin in OpenSearch Dashboards
 
 volumes:
-  metadata-gpt-postgres:
-  metadata-gpt-redis:
+  chat-stack-postgres:
+  chat-stack-redis:
     driver: local
   metadata_gpt_opensearch_data:

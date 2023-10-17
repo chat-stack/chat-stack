@@ -36,7 +36,7 @@ import { LangChainService } from './lang-chain.service';
         return new OpenSearchClient({
           node:
             (configService.get('OPENSEARCH_URL') as string) ??
-            'http://metadata-gpt-opensearch:9200',
+            'http://chat-stack-opensearch:9200',
         });
       },
       inject: [ConfigService],

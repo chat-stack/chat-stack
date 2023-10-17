@@ -25,7 +25,7 @@ async function bootstrap() {
       format.timestamp(),
       format.ms(),
       nestWinstonModuleUtilities.format.nestLike(
-        `metadata-gpt-server ${process.env.NODE_ENV}`,
+        `chat-stack-server ${process.env.NODE_ENV}`,
         {
           colors: true,
           prettyPrint: true,
@@ -47,7 +47,7 @@ async function bootstrap() {
           format.timestamp(),
           format.ms(),
           nestWinstonModuleUtilities.format.nestLike(
-            `metadata-gpt-server ${process.env.NODE_ENV}`,
+            `chat-stack-server ${process.env.NODE_ENV}`,
             {
               colors: false,
               prettyPrint: true,
@@ -69,7 +69,7 @@ async function bootstrap() {
             format.timestamp(),
             format.ms(),
             nestWinstonModuleUtilities.format.nestLike(
-              `metadata-gpt-server ${process.env.NODE_ENV}`,
+              `chat-stack-server ${process.env.NODE_ENV}`,
               {
                 colors: false,
                 prettyPrint: true,
