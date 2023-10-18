@@ -29,8 +29,7 @@ COPY --chown=node:node package.json pnpm-lock.yaml* ./
 
 # Install app dependencies using pnpm
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-# RUN npm config set registry https://registry.npm.taobao.org
-# RUN npm install
+
 # Bundle app source
 COPY --chown=node:node . .
 
