@@ -9,6 +9,7 @@ import {
   OneToMany,
   OneToOne,
   Property,
+  Rel,
   Unique,
 } from '@mikro-orm/core';
 import { Exclude, Expose } from 'class-transformer';
@@ -69,5 +70,5 @@ export class ChatBot extends CustomBaseEntity<
     cascade: [Cascade.ALL],
     orphanRemoval: true,
   })
-  rag?: Rag;
+  rag?: Rel<Rag>;
 }

@@ -4,6 +4,7 @@ import {
   Entity,
   OneToMany,
   OneToOne,
+  Rel,
 } from '@mikro-orm/core';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
@@ -16,19 +17,19 @@ export class Rag extends CustomBaseEntity<Rag, undefined> {
   @OneToOne(() => ChatBot, {
     mappedBy: 'rag',
   })
-  chatBot: ChatBot;
+  chatBot: Rel<ChatBot>;
 
   @OneToMany(() => TextDoc, (textDoc) => textDoc.rag, {
     nullable: true,
     cascade: [Cascade.ALL],
     orphanRemoval: true,
   })
-  textDocs = new Collection<TextDoc>(this);
+  textDocs = new Collection<Rel<TextDoc>>(this);
 
   @OneToMany(() => WebDoc, (webDoc) => webDoc.rag, {
     nullable: true,
     cascade: [Cascade.ALL],
     orphanRemoval: true,
   })
-  webDocs = new Collection<WebDoc>(this);
+  webDocs = new Collection<Rel<WebDoc>>(this);
 }

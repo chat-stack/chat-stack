@@ -7,6 +7,7 @@ import {
   ManyToOne,
   OneToOne,
   Property,
+  Rel,
 } from '@mikro-orm/core';
 import { Expose } from 'class-transformer';
 
@@ -22,14 +23,14 @@ export class FileDoc extends CustomBaseEntity<
   @ApiProperty()
   @ManyToOne(() => Rag)
   @Expose()
-  rag: Rag;
+  rag: Rel<Rag>;
 
   @OneToOne(() => File, {
     nullable: false,
     cascade: [Cascade.ALL],
     orphanRemoval: true,
   })
-  file: File;
+  file: Rel<File>;
 
   @ApiProperty()
   @Property()

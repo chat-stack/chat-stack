@@ -6,6 +6,8 @@ services:
     depends_on:
       - chat-stack-redis
       - chat-stack-postgres
+      - chat-stack-opensearch
+      - chat-stack-opensearch-dashboards
     build:
       context: .
       # Only will build local stage from our dockerfile
@@ -15,7 +17,7 @@ services:
     env_file:
       - .env
     # Run a command against the local stage of the image
-    command: pnpm start:debug
+    command: pnpm run start:debug
     ports:
       - ${PORT}:${PORT}
       - 9229:9229
@@ -57,10 +59,11 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - metadata_gpt_opensearch_data:/usr/share/metadata_gpt_opensearch/data
+      - chat_stack_opensearch_data:/usr/share/chat_stack_opensearch/data
     ports:
       - 9200:9200
       - 9600:9600
+
   chat-stack-opensearch-dashboards:
     image: opensearchproject/opensearch-dashboards:2.6.0 # Make sure the version of opensearch-dashboards matches the version of opensearch installed on other nodes
     container_name: chat-stack-opensearch-dashboards
@@ -76,4 +79,4 @@ volumes:
   chat-stack-postgres:
   chat-stack-redis:
     driver: local
-  metadata_gpt_opensearch_data:
+  chat_stack_opensearch_data:

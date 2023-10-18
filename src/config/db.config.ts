@@ -21,5 +21,6 @@ const options: MikroOrmModuleSyncOptions = {
     snapshot: true,
   },
   entityRepository: CustomEntityRepository,
+  autoLoadEntities: true,
 };
 export default registerAs('database', () => options);
