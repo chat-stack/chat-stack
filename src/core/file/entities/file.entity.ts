@@ -8,6 +8,9 @@ import { FileDoc } from 'src/core/file-doc/entities/file-doc.entity';
 
 @Entity()
 export class File extends CustomBaseEntity<File, 'fileDoc' | 'directoryPath'> {
+  @Expose()
+  id: number;
+
   @ApiProperty()
   @OneToOne(() => FileDoc, {
     mappedBy: 'file',
