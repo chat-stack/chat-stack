@@ -57,7 +57,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - metadata_gpt_opensearch_data:/usr/share/metadata_gpt_opensearch/data
+      - chat_stack_opensearch_data:/usr/share/chat_stack_opensearch/data
     ports:
       - 9200:9200
       - 9600:9600
@@ -76,4 +76,4 @@ volumes:
   chat-stack-postgres:
   chat-stack-redis:
     driver: local
-  metadata_gpt_opensearch_data:
+  chat_stack_opensearch_data:

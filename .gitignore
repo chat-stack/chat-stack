@@ -36,3 +36,5 @@ lerna-debug.log*
 .env
 
 uploads/*
+
+.pnpm-store
