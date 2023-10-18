@@ -20,9 +20,6 @@ dependencies:
   '@mikro-orm/postgresql':
     specifier: ^5.8.9
     version: 5.8.9(@mikro-orm/core@5.8.9)
-  '@mikro-orm/reflection':
-    specifier: ^5.8.9
-    version: 5.8.9(@mikro-orm/core@5.8.9)
   '@nestjs/bull':
     specifier: ^10.0.1
     version: 10.0.1(@nestjs/common@10.2.7)(@nestjs/core@10.2.7)(bull@4.11.4)
@@ -93,6 +90,41 @@ dependencies:
     specifier: ^3.11.0
     version: 3.11.0
 
+optionalDependencies:
+  '@swc/core':
+    specifier: ^1.3.93
+    version: 1.3.93
+  '@swc/core-darwin-arm64':
+    specifier: ^1.3.93
+    version: 1.3.93
+  '@swc/core-darwin-x64':
+    specifier: ^1.3.93
+    version: 1.3.93
+  '@swc/core-linux-arm-gnueabihf':
+    specifier: ^1.3.93
+    version: 1.3.93
+  '@swc/core-linux-arm64-gnu':
+    specifier: ^1.3.93
+    version: 1.3.93
+  '@swc/core-linux-arm64-musl':
+    specifier: ^1.3.93
+    version: 1.3.93
+  '@swc/core-linux-x64-gnu':
+    specifier: ^1.3.93
+    version: 1.3.93
+  '@swc/core-linux-x64-musl':
+    specifier: ^1.3.93
+    version: 1.3.93
+  '@swc/core-win32-arm64-msvc':
+    specifier: ^1.3.93
+    version: 1.3.93
+  '@swc/core-win32-ia32-msvc':
+    specifier: ^1.3.93
+    version: 1.3.93
+  '@swc/core-win32-x64-msvc':
+    specifier: ^1.3.93
+    version: 1.3.93
+
 devDependencies:
   '@nestjs/cli':
     specifier: ^10.1.18
@@ -106,9 +138,6 @@ devDependencies:
   '@swc/cli':
     specifier: ^0.1.62
     version: 0.1.62(@swc/core@1.3.93)
-  '@swc/core':
-    specifier: ^1.3.93
-    version: 1.3.93
   '@types/express':
     specifier: ^4.17.20
     version: 4.17.20
@@ -1756,17 +1785,6 @@ packages:
       - tedious
     dev: false
 
-  /@mikro-orm/reflection@5.8.9(@mikro-orm/core@5.8.9):
-    resolution: {integrity: sha512-aAOvldWjkcLn/eId5ar/PN8jWm0tKdyVMMCKZVkak0b0mDaHrKDPzzTFrAzhUsF8US9l5/t81E1ZSmjXG0vcxw==}
-    engines: {node: '>= 14.0.0'}
-    peerDependencies:
-      '@mikro-orm/core': ^5.0.0
-    dependencies:
-      '@mikro-orm/core': 5.8.9(@mikro-orm/postgresql@5.8.9)
-      globby: 11.1.0
-      ts-morph: 20.0.0
-    dev: false
-
   /@mole-inc/bin-wrapper@8.0.1:
     resolution: {integrity: sha512-sTGoeZnjI8N4KS+sW2AN95gDBErhAguvkw/tWdCjeM8bvxpz5lqrnd0vOJABA1A+Ic3zED7PYoLP/RANLgVotA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
@@ -2648,7 +2666,6 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@swc/core-darwin-x64@1.3.93:
@@ -2657,7 +2674,6 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@swc/core-linux-arm-gnueabihf@1.3.93:
@@ -2666,7 +2682,6 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@swc/core-linux-arm64-gnu@1.3.93:
@@ -2676,7 +2691,6 @@ packages:
     os: [linux]
     libc: [glibc]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@swc/core-linux-arm64-musl@1.3.93:
@@ -2686,7 +2700,6 @@ packages:
     os: [linux]
     libc: [musl]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@swc/core-linux-x64-gnu@1.3.93:
@@ -2696,7 +2709,6 @@ packages:
     os: [linux]
     libc: [glibc]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@swc/core-linux-x64-musl@1.3.93:
@@ -2706,7 +2718,6 @@ packages:
     os: [linux]
     libc: [musl]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@swc/core-win32-arm64-msvc@1.3.93:
@@ -2715,7 +2726,6 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@swc/core-win32-ia32-msvc@1.3.93:
@@ -2724,7 +2734,6 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@swc/core-win32-x64-msvc@1.3.93:
@@ -2733,7 +2742,6 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@swc/core@1.3.93:
@@ -2759,15 +2767,14 @@ packages:
       '@swc/core-win32-arm64-msvc': 1.3.93
       '@swc/core-win32-ia32-msvc': 1.3.93
       '@swc/core-win32-x64-msvc': 1.3.93
-    dev: true
 
   /@swc/counter@0.1.2:
     resolution: {integrity: sha512-9F4ys4C74eSTEUNndnER3VJ15oru2NumfQxS8geE+f3eB5xvfxpWyqE5XlVnxb/R14uoXi6SLbBwwiDSkv+XEw==}
-    dev: true
+    requiresBuild: true
 
   /@swc/types@0.1.5:
     resolution: {integrity: sha512-myfUej5naTBWnqOCc/MdVOLVjXUXtIA+NpDrDBKJtLLg2shUjBu3cZmB/85RyitKc55+lUUyl7oRfLOvkr2hsw==}
-    dev: true
+    requiresBuild: true
 
   /@szmarczak/http-timer@4.0.6:
     resolution: {integrity: sha512-4BAffykYOgO+5nzBWYwE3W90sBgLJoUPRWWcL8wlyiM8IB8ipJz3UMJ9KXQd1RKQXpKp8Tutn80HZtWsu2u76w==}
@@ -2779,15 +2786,6 @@ packages:
   /@tokenizer/token@0.3.0:
     resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==}
     dev: true
-
-  /@ts-morph/common@0.21.0:
-    resolution: {integrity: sha512-ES110Mmne5Vi4ypUKrtVQfXFDtCsDXiUiGxF6ILVlE90dDD4fdpC1LSjydl/ml7xJWKSDZwUYD2zkOePMSrPBA==}
-    dependencies:
-      fast-glob: 3.3.1
-      minimatch: 7.4.6
-      mkdirp: 2.1.6
-      path-browserify: 1.0.1
-    dev: false
 
   /@tsconfig/node10@1.0.9:
     resolution: {integrity: sha512-jNsYVVxU8v5g43Erja32laIDHXeoNvFEpX33OK4d6hljo3jDhCBDhx5dhCCTMWUojscpAagGiRkBKxpdl9fxqA==}
@@ -3681,6 +3679,7 @@ packages:
 
   /balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
+    dev: true
 
   /base-64@0.1.0:
     resolution: {integrity: sha512-Y5gU45svrR5tI2Vt/X9GPd3L0HNIKzGu202EjxrXMpuc2V2CiKgemAbUUsqYmZJvPtCXoUKjNZwBJzsNScUbXA==}
@@ -3794,6 +3793,7 @@ packages:
     resolution: {integrity: sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==}
     dependencies:
       balanced-match: 1.0.2
+    dev: true
 
   /braces@3.0.2:
     resolution: {integrity: sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==}
@@ -4054,10 +4054,6 @@ packages:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
     dev: true
-
-  /code-block-writer@12.0.0:
-    resolution: {integrity: sha512-q4dMFMlXtKR3XNBHyMHt/3pwYNA69EDk00lloMOaaUMKPUXBw6lpXtbu3MMVG6/uOihGnRDOlkyqsONEUj60+w==}
-    dev: false
 
   /collect-v8-coverage@1.0.2:
     resolution: {integrity: sha512-lHl4d5/ONEbLlJvaJNtsF/Lz+WvB07u2ycqTYbdrq7UypDXailES4valYb2eWiJFxZlVmpGekfqoxQhzyFdT4Q==}
@@ -7274,13 +7270,6 @@ packages:
       brace-expansion: 1.1.11
     dev: true
 
-  /minimatch@7.4.6:
-    resolution: {integrity: sha512-sBz8G/YjVniEz6lKPNpKxXwazJe4c19fEfV2GDMX6AjFz+MX9uDWIZW8XreVhkFW3fkIdTv/gxWr/Kks5FFAVw==}
-    engines: {node: '>=10'}
-    dependencies:
-      brace-expansion: 2.0.1
-    dev: false
-
   /minimatch@8.0.4:
     resolution: {integrity: sha512-W0Wvr9HyFXZRGIDgCicunpQ299OKXs9RgZfaukz4qAW/pJhcpUfupc9c+OObPOFueNy8VSrZgEmDtk6Kh4WzDA==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -7321,12 +7310,6 @@ packages:
     hasBin: true
     dependencies:
       minimist: 1.2.8
-
-  /mkdirp@2.1.6:
-    resolution: {integrity: sha512-+hEnITedc8LAtIP9u3HJDFIdcLV2vXP33sqLLIzkv1Db1zO/1OxbvYf0Y1OC/S/Qo5dxHXepofhmxL02PsKe+A==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dev: false
 
   /ml-array-mean@1.1.6:
     resolution: {integrity: sha512-MIdf7Zc8HznwIisyiJGRH9tRigg3Yf4FldW8DxKxpCCv/g5CafTw0RRu51nojVEOXuCQC7DRVVu5c7XXO/5joQ==}
@@ -7799,10 +7782,6 @@ packages:
       passport-strategy: 1.0.0
       pause: 0.0.1
       utils-merge: 1.0.1
-    dev: false
-
-  /path-browserify@1.0.1:
-    resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
     dev: false
 
   /path-exists@4.0.0:
@@ -9028,13 +9007,6 @@ packages:
       typescript: 5.2.2
       webpack: 5.89.0(@swc/core@1.3.93)
     dev: true
-
-  /ts-morph@20.0.0:
-    resolution: {integrity: sha512-JVmEJy2Wow5n/84I3igthL9sudQ8qzjh/6i4tmYCm6IqYyKFlNbJZi7oBdjyqcWSWYRu3CtL0xbT6fS03ESZIg==}
-    dependencies:
-      '@ts-morph/common': 0.21.0
-      code-block-writer: 12.0.0
-    dev: false
 
   /ts-node@10.9.1(@swc/core@1.3.93)(@types/node@20.8.6)(typescript@5.2.2):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}

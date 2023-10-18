@@ -1,7 +1,6 @@
 import { registerAs } from '@nestjs/config';
 
 import { MikroOrmModuleSyncOptions } from '@mikro-orm/nestjs';
-import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 
 import { CustomEntityRepository } from 'src/common/repositories/custom-entity-repository';
 
@@ -12,7 +11,6 @@ const options: MikroOrmModuleSyncOptions = {
   user: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   baseDir: process.cwd(),
-  metadataProvider: TsMorphMetadataProvider,
   entities: ['dist/**/*entity.{ts,js}'],
   entitiesTs: ['src/**/*entity.ts'],
   migrations: {
@@ -21,6 +19,5 @@ const options: MikroOrmModuleSyncOptions = {
     snapshot: true,
   },
   entityRepository: CustomEntityRepository,
-  autoLoadEntities: true,
 };
 export default registerAs('database', () => options);
