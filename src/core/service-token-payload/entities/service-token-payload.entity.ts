@@ -9,7 +9,7 @@ export class ServiceTokenPayload extends CustomBaseEntity<
   'role'
 > {
   @Unique()
-  @Enum({ items: () => Role, array: false, default: Role.ANON })
+  @Enum({ items: () => Role, array: false, default: Role.ANON, type: 'string' })
   role: Role = Role.ANON;
 
   @Property({ type: 'int8' })

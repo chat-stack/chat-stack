@@ -7,6 +7,7 @@ import {
   ManyToOne,
   OneToMany,
   Property,
+  Rel,
   Unique,
 } from '@mikro-orm/core';
 import { Exclude } from 'class-transformer';
@@ -34,25 +35,25 @@ export class ChatSession extends CustomBaseEntity<
   @ManyToOne(() => ChatBot, {
     name: 'chat_bot_id',
   })
-  chatBot: ChatBot;
+  chatBot: Rel<ChatBot>;
 
   @ManyToOne(() => EndCustomer, {
     name: 'end_customer_id',
     nullable: true,
   })
-  endCustomer?: EndCustomer;
+  endCustomer?: Rel<EndCustomer>;
 
   @ApiProperty()
   @Index({
     name: 'chat_session_metadata_index',
     expression: `CREATE INDEX chat_session_metadata_index ON chat_session USING gin (metadata)`,
   })
-  @Property({ type: 'jsonb' })
+  @Property({ type: 'jsonb', nullable: true })
   metadata?: Record<string, any>;
 
   @OneToMany(() => ChatHistory, (chatHistory) => chatHistory.chatSession, {
     nullable: false,
   })
   @Exclude()
-  chatHistories = new Collection<ChatHistory>(this);
+  chatHistories = new Collection<Rel<ChatHistory>>(this);
 }

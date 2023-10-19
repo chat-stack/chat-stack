@@ -7,9 +7,15 @@
 
 FROM node:20.7-alpine3.17 As local
 
+ENV NODE_ENV local
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+
+RUN corepack enable
+
 # Create app directory
 WORKDIR /usr/src/app
-
 
 # Install Chromium (for Puppeteer and other headless browser tasks)
 RUN apk update && apk add --no-cache chromium chromium-chromedriver
@@ -21,11 +27,8 @@ ENV CHROMIUM_BIN=/usr/bin/chromium-browser
 # Copying this first prevents re-running pnpm install on every code change.
 COPY --chown=node:node package.json pnpm-lock.yaml* ./
 
-ENV NODE_ENV local
-
 # Install app dependencies using pnpm
-RUN npm install -g pnpm
-RUN pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 # Bundle app source
 COPY --chown=node:node . .

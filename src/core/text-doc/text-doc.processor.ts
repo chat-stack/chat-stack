@@ -3,7 +3,7 @@ import { Logger } from '@nestjs/common';
 
 import { Job } from 'bull';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { MikroORM, UseRequestContext, wrap } from '@mikro-orm/core';
+import { CreateRequestContext, MikroORM, wrap } from '@mikro-orm/core';
 import { EntityManager } from '@mikro-orm/postgresql';
 
 import { LangChainService } from 'src/core/lang-chain/lang-chain.service';
@@ -24,7 +24,7 @@ export class TextDocProcessor {
   ) {}
 
   @Process('textDoc.loadToVectorStore')
-  @UseRequestContext()
+  @CreateRequestContext()
   async loadToVectorStore(job: Job) {
     const { id, document, indexName } = job.data as ITextDocJobData;
     const vectorStore = this.langChainService.createVectorStore({

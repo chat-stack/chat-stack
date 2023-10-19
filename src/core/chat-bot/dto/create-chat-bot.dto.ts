@@ -20,12 +20,12 @@ export class CreateChatBotDto {
   @IsOptional()
   firstAssistantMessage?: string;
 
-  @ApiProperty()
+  @ApiProperty({ enum: ChatBotMode })
   @IsEnum(ChatBotMode)
   @IsOptional()
   mode: ChatBotMode = ChatBotMode.DEFAULT;
 
-  @ApiProperty()
+  @ApiProperty({ type: () => CreateRagDto })
   @IsOptional()
   rag?: CreateRagDto;
 }

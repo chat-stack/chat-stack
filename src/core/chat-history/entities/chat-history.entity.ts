@@ -1,4 +1,5 @@
 import { Entity, Enum, ManyToOne, Property } from '@mikro-orm/core';
+import { Rel } from '@mikro-orm/core';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
 import { ChatRole } from 'src/common/types/chat-role.type';
@@ -10,9 +11,9 @@ export class ChatHistory extends CustomBaseEntity<ChatHistory, undefined> {
     name: 'chat_session_id',
     nullable: false,
   })
-  chatSession: ChatSession;
+  chatSession: Rel<ChatSession>;
 
-  @Enum({ items: () => ChatRole, array: false })
+  @Enum({ items: () => ChatRole, array: false, type: 'string' })
   chatRole: ChatRole;
 
   @Property({ type: 'text' })

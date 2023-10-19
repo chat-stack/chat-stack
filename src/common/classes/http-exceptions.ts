@@ -8,7 +8,7 @@ abstract class HttpExceptionResponse {
   @ApiProperty()
   error: string;
 
-  @ApiProperty()
+  @ApiProperty({ enum: HttpStatus })
   statusCode: HttpStatus;
 }
 
@@ -19,7 +19,7 @@ export class BadRequestExceptionResponse extends HttpExceptionResponse {
   @ApiProperty({ example: 'Bad Request' })
   error: string;
 
-  @ApiProperty({ example: HttpStatus.BAD_REQUEST })
+  @ApiProperty({ example: HttpStatus.BAD_REQUEST, enum: HttpStatus })
   statusCode: HttpStatus;
 }
 
@@ -30,7 +30,7 @@ export class UnauthorizedExceptionResponse extends HttpExceptionResponse {
   @ApiProperty({ example: 'Unauthorized' })
   error: string;
 
-  @ApiProperty({ example: HttpStatus.UNAUTHORIZED })
+  @ApiProperty({ example: HttpStatus.UNAUTHORIZED, enum: HttpStatus })
   statusCode: HttpStatus;
 }
 
@@ -41,7 +41,7 @@ export class ForbiddenExceptionResponse extends HttpExceptionResponse {
   @ApiProperty({ example: 'Forbidden' })
   error: string;
 
-  @ApiProperty({ example: HttpStatus.FORBIDDEN })
+  @ApiProperty({ example: HttpStatus.FORBIDDEN, enum: HttpStatus })
   statusCode: HttpStatus;
 }
 
@@ -52,7 +52,7 @@ export class NotFoundExceptionResponse extends HttpExceptionResponse {
   @ApiProperty({ example: 'Not Found' })
   error: string;
 
-  @ApiProperty({ example: HttpStatus.NOT_FOUND })
+  @ApiProperty({ example: HttpStatus.NOT_FOUND, enum: HttpStatus })
   statusCode: HttpStatus;
 }
 
@@ -63,6 +63,6 @@ export class InternalServerErrorExceptionResponse extends HttpExceptionResponse 
   @ApiProperty({ example: 'Internal Server Error' })
   error: string;
 
-  @ApiProperty({ example: HttpStatus.INTERNAL_SERVER_ERROR })
+  @ApiProperty({ example: HttpStatus.INTERNAL_SERVER_ERROR, enum: HttpStatus })
   statusCode: HttpStatus;
 }

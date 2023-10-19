@@ -1,7 +1,7 @@
 import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
 
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { MikroORM, UseRequestContext } from '@mikro-orm/core';
+import { CreateRequestContext, MikroORM } from '@mikro-orm/core';
 import { EntityManager } from '@mikro-orm/postgresql';
 
 import { Role } from 'src/common/types/role.type';
@@ -21,7 +21,7 @@ export class ServiceTokenPayloadService implements OnApplicationBootstrap {
     private readonly authService: AuthService,
   ) {}
 
-  @UseRequestContext()
+  @CreateRequestContext()
   async getTokenByRole(role: Role) {
     const oldPayload = await this.serviceTokenPayloadRepository.findOne({
       role,

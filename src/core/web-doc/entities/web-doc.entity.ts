@@ -1,15 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { Entity, Index, ManyToOne, Property } from '@mikro-orm/core';
+import { Entity, Index, ManyToOne, Property, Rel } from '@mikro-orm/core';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
 import { Rag } from 'src/core/rag/entities/rag.entity';
 
 @Entity()
 export class WebDoc extends CustomBaseEntity<WebDoc, 'metadata' | 'loadedAt'> {
-  @ApiProperty()
+  @ApiProperty({ type: () => Rag })
   @ManyToOne(() => Rag)
-  rag: Rag;
+  rag: Rel<Rag>;
 
   @ApiProperty()
   @Property({ type: 'text' })
@@ -20,10 +20,10 @@ export class WebDoc extends CustomBaseEntity<WebDoc, 'metadata' | 'loadedAt'> {
     name: 'web_doc_metadata_index',
     expression: `CREATE INDEX web_doc_metadata_index ON web_doc USING gin (metadata)`,
   })
-  @Property({ type: 'jsonb' })
+  @Property({ type: 'jsonb', nullable: true })
   metadata?: Record<string, any>;
 
   @ApiProperty()
-  @Property()
+  @Property({ nullable: true })
   loadedAt?: Date;
 }

@@ -7,6 +7,7 @@ import {
   ManyToOne,
   OneToOne,
   Property,
+  Rel,
 } from '@mikro-orm/core';
 import { Expose } from 'class-transformer';
 
@@ -19,22 +20,24 @@ export class FileDoc extends CustomBaseEntity<
   FileDoc,
   'metadata' | 'loadedAt'
 > {
-  @ApiProperty()
+  @ApiProperty({ type: () => Rag })
   @ManyToOne(() => Rag)
   @Expose()
-  rag: Rag;
+  rag: Rel<Rag>;
 
   @OneToOne(() => File, {
     nullable: false,
     cascade: [Cascade.ALL],
     orphanRemoval: true,
   })
-  file: File;
+  file: Rel<File>;
 
   @ApiProperty()
-  @Property()
+  @Property({
+    default: 'default',
+  })
   @Expose()
-  directoryPath: string;
+  directoryPath: string = 'default';
 
   @ApiProperty()
   @Property()
@@ -51,12 +54,14 @@ export class FileDoc extends CustomBaseEntity<
     name: 'file_doc_metadata_index',
     expression: `CREATE INDEX file_doc_metadata_index ON file_doc USING gin (metadata)`,
   })
-  @Property({ type: 'jsonb' })
+  @Property({ type: 'jsonb', nullable: true })
   @Expose()
   metadata?: Record<string, any>;
 
   @ApiProperty()
-  @Property()
+  @Property({
+    nullable: true,
+  })
   @Expose()
   loadedAt?: Date;
 }

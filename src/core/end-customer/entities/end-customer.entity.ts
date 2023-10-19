@@ -1,4 +1,4 @@
-import { Collection, Entity, OneToMany } from '@mikro-orm/core';
+import { Collection, Entity, OneToMany, Rel } from '@mikro-orm/core';
 import { Exclude } from 'class-transformer';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
@@ -10,5 +10,5 @@ export class EndCustomer extends CustomBaseEntity<EndCustomer, 'chatSessions'> {
     nullable: false,
   })
   @Exclude()
-  chatSessions = new Collection<ChatSession>(this);
+  chatSessions = new Collection<Rel<ChatSession>>(this);
 }

@@ -10,7 +10,7 @@ export class CreateChatHistoryDto {
   @IsNumber()
   chatSessionId: number;
 
-  @ApiProperty()
+  @ApiProperty({ enum: ChatRole })
   @IsNotEmpty()
   @IsEnum(ChatRole)
   chatRole: ChatRole;

@@ -20,27 +20,27 @@ export const ApiMixedResponse = <TModel extends Type<any>>(model: TModel) => {
   return applyDecorators(
     ApiOkResponse({
       description: 'Ok',
-      type: model,
+      type: () => model,
     }),
     ApiBadRequestResponse({
       description: 'Bad Request',
-      type: BadRequestExceptionResponse,
+      type: () => BadRequestExceptionResponse,
     }),
     ApiUnauthorizedResponse({
       description: 'Unauthorized',
-      type: UnauthorizedExceptionResponse,
+      type: () => UnauthorizedExceptionResponse,
     }),
     ApiForbiddenResponse({
       description: 'Forbidden',
-      type: ForbiddenExceptionResponse,
+      type: () => ForbiddenExceptionResponse,
     }),
     ApiNotFoundResponse({
       description: 'Not Found',
-      type: NotFoundExceptionResponse,
+      type: () => NotFoundExceptionResponse,
     }),
     ApiInternalServerErrorResponse({
       description: 'Internal Server Error',
-      type: InternalServerErrorExceptionResponse,
+      type: () => InternalServerErrorExceptionResponse,
     }),
   );
 };

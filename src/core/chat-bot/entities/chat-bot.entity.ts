@@ -9,6 +9,7 @@ import {
   OneToMany,
   OneToOne,
   Property,
+  Rel,
   Unique,
 } from '@mikro-orm/core';
 import { Exclude, Expose } from 'class-transformer';
@@ -38,36 +39,36 @@ export class ChatBot extends CustomBaseEntity<
   name: string;
 
   @ApiProperty()
-  @Property()
+  @Property({ nullable: true })
   @Expose()
   promptTemplate?: string;
 
   @ApiProperty()
-  @Property()
+  @Property({ nullable: true })
   @Expose()
   firstAssistantMessage?: string;
 
   @OneToMany(() => ChatSession, (chatSession) => chatSession.chatBot, {
     cascade: [Cascade.ALL],
     orphanRemoval: true,
-    nullable: false,
   })
   @Exclude()
-  chatSessions = new Collection<ChatSession>(this);
+  chatSessions = new Collection<Rel<ChatSession>>(this);
 
-  @ApiProperty()
+  @ApiProperty({ enum: ChatBotMode })
   @Enum({
     items: () => ChatBotMode,
     array: false,
     default: ChatBotMode.DEFAULT,
+    type: 'string',
   })
   @Expose()
   mode: ChatBotMode = ChatBotMode.DEFAULT;
 
   @OneToOne(() => Rag, {
-    nullable: true,
     cascade: [Cascade.ALL],
     orphanRemoval: true,
+    nullable: true,
   })
-  rag?: Rag;
+  rag?: Rel<Rag>;
 }
