@@ -20,7 +20,7 @@ export class FileDoc extends CustomBaseEntity<
   FileDoc,
   'metadata' | 'loadedAt'
 > {
-  // //@ApiProperty()
+  @ApiProperty({ type: () => Rag })
   @ManyToOne(() => Rag)
   @Expose()
   rag: Rel<Rag>;
@@ -32,24 +32,24 @@ export class FileDoc extends CustomBaseEntity<
   })
   file: Rel<File>;
 
-  //@ApiProperty()
+  @ApiProperty()
   @Property({
     default: 'default',
   })
   @Expose()
   directoryPath: string = 'default';
 
-  //@ApiProperty()
+  @ApiProperty()
   @Property()
   @Expose()
   filename: string;
 
-  //@ApiProperty()
+  @ApiProperty()
   @Property()
   @Expose()
   mimeType: string;
 
-  //@ApiProperty()
+  @ApiProperty()
   @Index({
     name: 'file_doc_metadata_index',
     expression: `CREATE INDEX file_doc_metadata_index ON file_doc USING gin (metadata)`,
@@ -58,7 +58,7 @@ export class FileDoc extends CustomBaseEntity<
   @Expose()
   metadata?: Record<string, any>;
 
-  //@ApiProperty()
+  @ApiProperty()
   @Property({
     nullable: true,
   })
