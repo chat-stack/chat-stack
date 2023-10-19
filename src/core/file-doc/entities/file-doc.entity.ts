@@ -33,23 +33,6 @@ export class FileDoc extends CustomBaseEntity<
   file: Rel<File>;
 
   @ApiProperty()
-  @Property({
-    default: './',
-  })
-  @Expose()
-  directoryPath: string = './';
-
-  @ApiProperty()
-  @Property()
-  @Expose()
-  filename: string;
-
-  @ApiProperty()
-  @Property()
-  @Expose()
-  mimeType: string;
-
-  @ApiProperty()
   @Index({
     name: 'file_doc_metadata_index',
     expression: `CREATE INDEX file_doc_metadata_index ON file_doc USING gin (metadata)`,

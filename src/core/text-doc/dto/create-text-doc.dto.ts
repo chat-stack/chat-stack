@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { IsOptional, IsString } from 'class-validator';
 
-import { isMetadata } from 'src/common/decorators/is-metadata.decorator';
+import { IsMetadata } from 'src/common/decorators/is-metadata.decorator';
 
 export class CreateTextDocDto {
   @ApiProperty()
@@ -10,7 +10,7 @@ export class CreateTextDocDto {
   pageContent: string;
 
   @ApiProperty()
-  @isMetadata()
+  @IsMetadata()
   @IsOptional()
   metadata?: Record<string, any>;
 }

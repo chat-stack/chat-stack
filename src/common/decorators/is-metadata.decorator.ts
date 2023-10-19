@@ -6,10 +6,10 @@ import {
   ValidationArguments,
 } from 'class-validator';
 
-export function isMetadata(validationOptions?: ValidationOptions) {
+export function IsMetadata(validationOptions?: ValidationOptions) {
   return (object: any, propertyName: string) => {
     registerDecorator({
-      name: 'isMetadata',
+      name: 'IsMetadata',
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
