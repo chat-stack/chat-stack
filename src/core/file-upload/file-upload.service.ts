@@ -3,7 +3,6 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { FileStorageService } from 'src/integrations/file-storage/file-storage.service';
 import { FileService } from 'src/core/file/file.service';
 import { DEFAULT_DIRECTORY_PATH } from 'src/integrations/file-storage/constants';
-import DeepLog from 'src/common/util/deep-log';
 
 @Injectable()
 export class FileUploadService {
@@ -28,7 +27,6 @@ export class FileUploadService {
       fileContent: file.buffer,
       mimeType: file.mimetype,
     });
-    DeepLog('James');
     return fileEnt;
   }
 }
