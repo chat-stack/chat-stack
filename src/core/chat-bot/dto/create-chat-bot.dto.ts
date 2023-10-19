@@ -6,26 +6,26 @@ import { ChatBotMode } from 'src/core/chat-bot/types/chatBotType.type';
 import { CreateRagDto } from 'src/core/rag/dto/create-rag.dto';
 
 export class CreateChatBotDto {
-  // @ApiProperty()
+  @ApiProperty()
   @IsString()
   name: string;
 
-  // @ApiProperty()
+  @ApiProperty()
   @IsString()
   @IsOptional()
   promptTemplate?: string;
 
-  // @ApiProperty()
+  @ApiProperty()
   @IsString()
   @IsOptional()
   firstAssistantMessage?: string;
 
-  // @ApiProperty()
+  @ApiProperty({ enum: ChatBotMode })
   @IsEnum(ChatBotMode)
   @IsOptional()
   mode: ChatBotMode = ChatBotMode.DEFAULT;
 
-  // @ApiProperty({ type: () => CreateRagDto })
+  @ApiProperty({ type: () => CreateRagDto })
   @IsOptional()
   rag?: CreateRagDto;
 }
