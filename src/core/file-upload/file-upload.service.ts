@@ -22,7 +22,9 @@ export class FileUploadService {
     }
     await this.fileStorageService.writeFile({
       directoryPath: DEFAULT_DIRECTORY_PATH,
-      filename: `${file.originalname}-${fileEnt.uuid}`,
+      filename: `${file.originalname.split('.')[0]}-${fileEnt.uuid}.${
+        file.originalname.split('.')[1]
+      }`,
       fileContent: file.buffer,
       mimeType: file.mimetype,
     });
