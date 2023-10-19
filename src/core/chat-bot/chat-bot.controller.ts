@@ -41,7 +41,7 @@ export class ChatBotController {
 
   @Post()
   @ApiOperation({ summary: 'Create ChatBot' })
-  // @ApiMixedResponse(ChatBot)
+  @ApiMixedResponse(ChatBot)
   @UseFilters(DatabaseExceptionFilter)
   async create(@Body() createChatBotDto: CreateChatBotDto): Promise<ChatBot> {
     return this.chatBotService.create(createChatBotDto);
@@ -49,7 +49,7 @@ export class ChatBotController {
 
   @Get()
   @ApiOperation({ summary: 'List ChatBots' })
-  // @ApiPaginatedResponse(ChatBot)
+  @ApiPaginatedResponse(ChatBot)
   async findAll(
     @Query() pageOptionsDto: PageOptionsDto,
   ): Promise<PageDto<ChatBot>> {
@@ -58,14 +58,14 @@ export class ChatBotController {
 
   @Get(':uuid')
   @ApiOperation({ summary: 'Get ChatBot' })
-  // @ApiMixedResponse(ChatBot)
+  @ApiMixedResponse(ChatBot)
   async findOne(@Param('uuid') uuid: string): Promise<ChatBot> {
     return this.chatBotService.findOneOrFail(uuid);
   }
 
   @Patch(':uuid')
   @ApiOperation({ summary: 'Update ChatBot' })
-  // @ApiMixedResponse(ChatBot)
+  @ApiMixedResponse(ChatBot)
   async update(
     @Param('uuid') uuid: string,
     @Body() updateChatBotDto: UpdateChatBotDto,
@@ -75,7 +75,7 @@ export class ChatBotController {
 
   @Delete(':uuid')
   @ApiOperation({ summary: 'Remove ChatBot' })
-  // @ApiMixedResponse(ChatBot)
+  @ApiMixedResponse(ChatBot)
   remove(@Param('uuid') uuid: string) {
     return this.chatBotService.remove(uuid);
   }
