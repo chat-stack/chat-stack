@@ -43,7 +43,7 @@ export class ChatSession extends CustomBaseEntity<
   })
   endCustomer?: Rel<EndCustomer>;
 
-  //@ApiProperty()
+  @ApiProperty()
   @Index({
     name: 'chat_session_metadata_index',
     expression: `CREATE INDEX chat_session_metadata_index ON chat_session USING gin (metadata)`,

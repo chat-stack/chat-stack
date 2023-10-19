@@ -5,17 +5,17 @@ import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { ChatRole } from 'src/common/types/chat-role.type';
 
 export class CreateChatHistoryDto {
-  //@ApiProperty()
+  @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
   chatSessionId: number;
 
-  //@ApiProperty()
+  @ApiProperty({ enum: ChatRole })
   @IsNotEmpty()
   @IsEnum(ChatRole)
   chatRole: ChatRole;
 
-  //@ApiProperty()
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   message: string;
