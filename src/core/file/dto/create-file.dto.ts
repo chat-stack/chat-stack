@@ -3,21 +3,21 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsOptional, IsString } from 'class-validator';
 
 export class CreateFileDto {
-  @ApiProperty()
+  //@ApiProperty()
   @IsInt()
   @IsOptional()
   fileDocId?: number;
 
-  @ApiProperty()
+  //@ApiProperty()
   @IsString()
   @IsOptional()
   directoryPath? = 'default';
 
-  @ApiProperty()
+  //@ApiProperty()
   @IsString()
   filename: string;
 
-  @ApiProperty()
+  //@ApiProperty()
   @IsString()
   mimeType: string;
 }

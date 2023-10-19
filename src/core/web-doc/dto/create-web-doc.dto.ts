@@ -5,12 +5,12 @@ import { IsOptional, IsString, IsUrl } from 'class-validator';
 import { isMetadata } from 'src/common/decorators/is-metadata.decorator';
 
 export class CreateWebDocDto {
-  @ApiProperty()
+  //@ApiProperty()
   @IsUrl()
   @IsString()
   url: string;
 
-  @ApiProperty()
+  //@ApiProperty()
   @isMetadata()
   @IsOptional()
   metadata?: Record<string, any>;

@@ -25,50 +25,50 @@ export class ChatBot extends CustomBaseEntity<
   ChatBot,
   'firstAssistantMessage' | 'chatSessions'
 > {
-  @ApiProperty()
+  // @ApiProperty()
   @Index()
   @Unique()
   @Property({ type: 'uuid', default: uuid() })
   @Expose()
   uuid: string = uuid();
 
-  @ApiProperty()
+  // @ApiProperty()
   @Unique()
   @Property()
   @Expose()
   name: string;
 
-  @ApiProperty()
-  @Property()
+  // @ApiProperty()
+  @Property({ nullable: true })
   @Expose()
   promptTemplate?: string;
 
-  @ApiProperty()
-  @Property()
+  // @ApiProperty()
+  @Property({ nullable: true })
   @Expose()
   firstAssistantMessage?: string;
 
   @OneToMany(() => ChatSession, (chatSession) => chatSession.chatBot, {
     cascade: [Cascade.ALL],
     orphanRemoval: true,
-    nullable: false,
   })
   @Exclude()
-  chatSessions = new Collection<ChatSession>(this);
+  chatSessions = new Collection<Rel<ChatSession>>(this);
 
-  @ApiProperty()
+  // @ApiProperty()
   @Enum({
     items: () => ChatBotMode,
     array: false,
     default: ChatBotMode.DEFAULT,
+    type: 'string',
   })
   @Expose()
   mode: ChatBotMode = ChatBotMode.DEFAULT;
 
   @OneToOne(() => Rag, {
-    nullable: true,
     cascade: [Cascade.ALL],
     orphanRemoval: true,
+    nullable: true,
   })
   rag?: Rel<Rag>;
 }

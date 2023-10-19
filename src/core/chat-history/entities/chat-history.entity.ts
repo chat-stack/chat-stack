@@ -13,7 +13,7 @@ export class ChatHistory extends CustomBaseEntity<ChatHistory, undefined> {
   })
   chatSession: Rel<ChatSession>;
 
-  @Enum({ items: () => ChatRole, array: false })
+  @Enum({ items: () => ChatRole, array: false, type: 'string' })
   chatRole: ChatRole;
 
   @Property({ type: 'text' })

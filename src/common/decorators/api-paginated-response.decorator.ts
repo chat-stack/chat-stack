@@ -25,17 +25,20 @@ export const ApiPaginatedResponse = <TModel extends Type<any>>(
 ) => {
   const description = options?.description || '';
   return applyDecorators(
-    ApiExtraModels(PageDto, model),
+    ApiExtraModels(
+      () => PageDto,
+      () => model,
+    ),
     ApiOkResponse({
       description,
       schema: {
         allOf: [
-          { $ref: getSchemaPath(PageDto) },
+          { $ref: getSchemaPath(() => PageDto) },
           {
             properties: {
               data: {
                 type: 'array',
-                items: { $ref: getSchemaPath(model) },
+                items: { $ref: getSchemaPath(() => model) },
               },
             },
           },
@@ -44,19 +47,19 @@ export const ApiPaginatedResponse = <TModel extends Type<any>>(
     }),
     ApiBadRequestResponse({
       description: 'Bad Request',
-      type: BadRequestExceptionResponse,
+      type: () => BadRequestExceptionResponse,
     }),
     ApiUnauthorizedResponse({
       description: 'Unauthorized',
-      type: UnauthorizedExceptionResponse,
+      type: () => UnauthorizedExceptionResponse,
     }),
     ApiForbiddenResponse({
       description: 'Forbidden',
-      type: ForbiddenExceptionResponse,
+      type: () => ForbiddenExceptionResponse,
     }),
     ApiInternalServerErrorResponse({
       description: 'Internal Server Error',
-      type: InternalServerErrorExceptionResponse,
+      type: () => InternalServerErrorExceptionResponse,
     }),
   );
 };

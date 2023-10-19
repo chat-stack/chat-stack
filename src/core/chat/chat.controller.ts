@@ -28,7 +28,7 @@ export class ChatController {
 
   @Post()
   @ApiOperation({ summary: 'Message ChatBot and create Chat' })
-  @ApiMixedResponse(ChatHistory)
+  // @ApiMixedResponse(ChatHistory)
   @HttpCode(200)
   async getChatBotResponse(
     @CurrentUser() userContext: IUserContext,

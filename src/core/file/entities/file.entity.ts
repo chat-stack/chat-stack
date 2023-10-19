@@ -16,14 +16,14 @@ import { FileDoc } from 'src/core/file-doc/entities/file-doc.entity';
 
 @Entity()
 export class File extends CustomBaseEntity<File, 'fileDoc' | 'directoryPath'> {
-  @ApiProperty()
+  //@ApiProperty()
   @Index()
   @Unique()
   @Property({ type: 'uuid', default: uuid() })
   @Expose()
   uuid: string = uuid();
 
-  @ApiProperty()
+  // //@ApiProperty()
   @OneToOne(() => FileDoc, {
     mappedBy: 'file',
     nullable: true,
@@ -31,17 +31,19 @@ export class File extends CustomBaseEntity<File, 'fileDoc' | 'directoryPath'> {
   @Expose()
   fileDoc?: Rel<FileDoc>;
 
-  @ApiProperty()
-  @Property()
+  //@ApiProperty()
+  @Property({
+    default: 'default',
+  })
   @Expose()
-  directoryPath = 'default';
+  directoryPath: string = 'default';
 
-  @ApiProperty()
+  //@ApiProperty()
   @Property()
   @Expose()
   filename: string;
 
-  @ApiProperty()
+  //@ApiProperty()
   @Property()
   @Expose()
   mimeType: string;

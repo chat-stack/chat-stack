@@ -10,23 +10,23 @@ export class TextDoc extends CustomBaseEntity<
   TextDoc,
   'metadata' | 'loadedAt'
 > {
-  @ApiProperty()
+  // //@ApiProperty()
   @ManyToOne(() => Rag)
   rag: Rel<Rag>;
 
-  @ApiProperty()
+  //@ApiProperty()
   @Property({ type: 'text' })
   text: string;
 
-  @ApiProperty()
+  //@ApiProperty()
   @Index({
     name: 'text_doc_metadata_index',
     expression: `CREATE INDEX text_doc_metadata_index ON text_doc USING gin (metadata)`,
   })
-  @Property({ type: 'jsonb' })
+  @Property({ type: 'jsonb', nullable: true })
   metadata?: Record<string, any>;
 
-  @ApiProperty()
-  @Property()
+  //@ApiProperty()
+  @Property({ nullable: true })
   loadedAt?: Date;
 }

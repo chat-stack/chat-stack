@@ -10,7 +10,7 @@ import {
   MikroORM,
   EntityManager,
   wrap,
-  UseRequestContext,
+  CreateRequestContext,
 } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 
@@ -32,7 +32,7 @@ export class WebDocProcessor {
   ) {}
 
   @Process('webDoc.loadToVectorStore')
-  @UseRequestContext()
+  @CreateRequestContext()
   async loadToVectorStore(job: Job) {
     const { id, url, metadata, indexName } = job.data as IWebDocJobData;
     const vectorStore = this.langChainService.createVectorStore({

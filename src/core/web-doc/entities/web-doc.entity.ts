@@ -7,23 +7,23 @@ import { Rag } from 'src/core/rag/entities/rag.entity';
 
 @Entity()
 export class WebDoc extends CustomBaseEntity<WebDoc, 'metadata' | 'loadedAt'> {
-  @ApiProperty()
+  // //@ApiProperty()
   @ManyToOne(() => Rag)
   rag: Rel<Rag>;
 
-  @ApiProperty()
+  //@ApiProperty()
   @Property({ type: 'text' })
   url: string;
 
-  @ApiProperty()
+  //@ApiProperty()
   @Index({
     name: 'web_doc_metadata_index',
     expression: `CREATE INDEX web_doc_metadata_index ON web_doc USING gin (metadata)`,
   })
-  @Property({ type: 'jsonb' })
+  @Property({ type: 'jsonb', nullable: true })
   metadata?: Record<string, any>;
 
-  @ApiProperty()
-  @Property()
+  //@ApiProperty()
+  @Property({ nullable: true })
   loadedAt?: Date;
 }
