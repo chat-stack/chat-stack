@@ -34,10 +34,10 @@ export class FileDoc extends CustomBaseEntity<
 
   @ApiProperty()
   @Property({
-    default: 'default',
+    default: './',
   })
   @Expose()
-  directoryPath: string = 'default';
+  directoryPath: string = './';
 
   @ApiProperty()
   @Property()

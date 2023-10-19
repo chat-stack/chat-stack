@@ -11,7 +11,7 @@ export class CreateFileDto {
   @ApiProperty()
   @IsString()
   @IsOptional()
-  directoryPath? = 'default';
+  directoryPath? = './';
 
   @ApiProperty()
   @IsString()
