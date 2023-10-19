@@ -25,25 +25,25 @@ export class ChatBot extends CustomBaseEntity<
   ChatBot,
   'firstAssistantMessage' | 'chatSessions'
 > {
-  // @ApiProperty()
+  @ApiProperty()
   @Index()
   @Unique()
   @Property({ type: 'uuid', default: uuid() })
   @Expose()
   uuid: string = uuid();
 
-  // @ApiProperty()
+  @ApiProperty()
   @Unique()
   @Property()
   @Expose()
   name: string;
 
-  // @ApiProperty()
+  @ApiProperty()
   @Property({ nullable: true })
   @Expose()
   promptTemplate?: string;
 
-  // @ApiProperty()
+  @ApiProperty()
   @Property({ nullable: true })
   @Expose()
   firstAssistantMessage?: string;
@@ -55,7 +55,7 @@ export class ChatBot extends CustomBaseEntity<
   @Exclude()
   chatSessions = new Collection<Rel<ChatSession>>(this);
 
-  // @ApiProperty()
+  @ApiProperty({ enum: ChatBotMode })
   @Enum({
     items: () => ChatBotMode,
     array: false,
