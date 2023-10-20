@@ -73,7 +73,7 @@ export class WebDocProcessor {
       });
       await this.em.persistAndFlush(webDoc);
       this.logger.log({
-        message: `Finished loading textDoc ${webDoc.id}`,
+        message: `Finished loading webDoc ${webDoc.id}`,
         id: webDoc.id,
         url: webDoc.url,
       });

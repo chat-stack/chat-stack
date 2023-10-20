@@ -1,15 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import {
-  Entity,
-  Index,
-  OneToOne,
-  Property,
-  Rel,
-  Unique,
-} from '@mikro-orm/core';
+import { Entity, OneToOne, Property, Rel } from '@mikro-orm/core';
 import { Expose } from 'class-transformer';
-import { v4 as uuid } from 'uuid';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
 import { FileDoc } from 'src/core/file-doc/entities/file-doc.entity';
@@ -17,11 +9,8 @@ import { FileDoc } from 'src/core/file-doc/entities/file-doc.entity';
 @Entity()
 export class File extends CustomBaseEntity<File, 'fileDoc' | 'directoryPath'> {
   @ApiProperty()
-  @Index()
-  @Unique()
-  @Property({ type: 'uuid', default: uuid() })
   @Expose()
-  uuid: string = uuid();
+  id: number;
 
   @ApiProperty({ type: () => FileDoc })
   @OneToOne(() => FileDoc, {

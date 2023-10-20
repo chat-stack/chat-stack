@@ -1,5 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 
+import { v4 } from 'uuid';
+
 import { FileStorageService } from 'src/integrations/file-storage/file-storage.service';
 import { FileService } from 'src/core/file/file.service';
 import { DEFAULT_DIRECTORY_PATH } from 'src/integrations/file-storage/constants';
@@ -12,8 +14,11 @@ export class FileUploadService {
   ) {}
 
   async uploadFile(file: Express.Multer.File) {
+    const filenameParts = file.originalname.split('.');
+    const fileExtension = filenameParts.pop();
+    const filename = `${filenameParts.join('.')}-${v4()}.${fileExtension}`;
     const fileEnt = await this.fileService.create({
-      filename: file.fieldname,
+      filename,
       mimeType: file.mimetype,
     });
     if (!fileEnt) {
@@ -21,9 +26,7 @@ export class FileUploadService {
     }
     await this.fileStorageService.writeFile({
       directoryPath: DEFAULT_DIRECTORY_PATH,
-      filename: `${file.originalname.split('.')[0]}-${fileEnt.uuid}.${
-        file.originalname.split('.')[1]
-      }`,
+      filename,
       fileContent: file.buffer,
       mimeType: file.mimetype,
     });

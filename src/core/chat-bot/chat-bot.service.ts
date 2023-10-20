@@ -1,12 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
-import { EntityManager, wrap } from '@mikro-orm/core';
+import { EntityManager, Reference, wrap } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 
 import { PageOptionsDto } from 'src/common/dto/page/page-option.dto';
 import { PageDto } from 'src/common/dto/page/page.dto';
 import { CustomEntityRepository } from 'src/common/repositories/custom-entity-repository';
 import { RagService } from 'src/core/rag/rag.service';
+import { FileDoc } from 'src/core/file-doc/entities/file-doc.entity';
 
 import { ChatBot } from './entities/chat-bot.entity';
 import { CreateChatBotDto } from './dto/create-chat-bot.dto';
@@ -22,7 +23,18 @@ export class ChatBotService {
   ) {}
 
   async create(createChatBotDto: CreateChatBotDto): Promise<ChatBot> {
-    const chatBot = this.chatBotRepository.create(createChatBotDto);
+    const chatBot = this.chatBotRepository.create({
+      ...createChatBotDto,
+      rag: {
+        ...createChatBotDto.rag,
+        fileDocs: createChatBotDto.rag?.fileDocs?.map((fileDocDto) => {
+          return {
+            file: Reference.createFromPK(FileDoc, fileDocDto.fileId),
+            ...fileDocDto,
+          };
+        }),
+      },
+    });
     await this.em.persistAndFlush(chatBot);
     if (chatBot.rag) {
       await this.ragService.loadToVectorStore(chatBot.rag);

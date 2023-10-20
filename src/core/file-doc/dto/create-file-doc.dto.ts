@@ -1,14 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsNumber, IsOptional } from 'class-validator';
 
 import { IsMetadata } from 'src/common/decorators/is-metadata.decorator';
 
 export class CreateFileDocDto {
   @ApiProperty()
-  @IsUUID()
-  @IsString()
-  fileUuid: string;
+  @IsNumber()
+  fileId: number;
 
   @ApiProperty()
   @IsMetadata()
