@@ -23,7 +23,7 @@ import { WebDoc } from './entities/web-doc.entity';
 @Processor('webDoc')
 export class WebDocProcessor {
   constructor(
-    private readonly orm: MikroORM, // usage with @UseRequestContext()
+    private readonly orm: MikroORM, // usage with @CreateRequestContext()
     private readonly em: EntityManager,
     @InjectRepository(WebDoc)
     private readonly webDocRepository: CustomEntityRepository<WebDoc>,

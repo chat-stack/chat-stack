@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 
 @Controller('file')
-export class FileController {
+export class FileEntController {
   // constructor(private readonly fileService: FileService) {}
   // @Post()
   // create(@Body() createFileDto: CreateFileDto) {

@@ -13,7 +13,7 @@ import { Expose } from 'class-transformer';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
 import { Rag } from 'src/core/rag/entities/rag.entity';
-import { File } from 'src/core/file/entities/file.entity';
+import { FileEnt } from 'src/core/file-ent/entities/file-ent.entity';
 
 @Entity()
 export class FileDoc extends CustomBaseEntity<
@@ -25,12 +25,12 @@ export class FileDoc extends CustomBaseEntity<
   @Expose()
   rag: Rel<Rag>;
 
-  @OneToOne(() => File, {
+  @OneToOne(() => FileEnt, {
     nullable: false,
     cascade: [Cascade.ALL],
     orphanRemoval: true,
   })
-  file: Rel<File>;
+  fileEnt: Rel<FileEnt>;
 
   @ApiProperty()
   @Index({

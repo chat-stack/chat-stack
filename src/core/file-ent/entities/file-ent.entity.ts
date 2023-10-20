@@ -7,14 +7,17 @@ import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity'
 import { FileDoc } from 'src/core/file-doc/entities/file-doc.entity';
 
 @Entity()
-export class File extends CustomBaseEntity<File, 'fileDoc' | 'directoryPath'> {
+export class FileEnt extends CustomBaseEntity<
+  FileEnt,
+  'fileDoc' | 'directoryPath'
+> {
   @ApiProperty()
   @Expose()
   id: number;
 
   @ApiProperty({ type: () => FileDoc })
   @OneToOne(() => FileDoc, {
-    mappedBy: 'file',
+    mappedBy: 'fileEnt',
     nullable: true,
   })
   @Expose()

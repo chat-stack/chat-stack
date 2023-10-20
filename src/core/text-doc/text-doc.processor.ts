@@ -15,7 +15,7 @@ import { TextDoc } from './entities/text-doc.entity';
 @Processor('textDoc')
 export class TextDocProcessor {
   constructor(
-    private readonly orm: MikroORM, // usage with @UseRequestContext()
+    private readonly orm: MikroORM, // usage with @CreateRequestContext()
     private readonly em: EntityManager,
     @InjectRepository(TextDoc)
     private readonly textDocRepository: CustomEntityRepository<TextDoc>,

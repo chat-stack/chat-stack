@@ -23,7 +23,7 @@ import langChainConfig from './config/lang-chain.config';
 import { WebDocModule } from './core/web-doc/web-doc.module';
 import { FileDocModule } from './core/file-doc/file-doc.module';
 import { FileUploadModule } from './core/file-upload/file-upload.module';
-import { FileModule } from './core/file/file.module';
+import { FileEntModule } from './core/file-ent/file-ent.module';
 import { FileStorageModule } from './integrations/file-storage/file-storage.module';
 
 @Module({
@@ -58,7 +58,7 @@ import { FileStorageModule } from './integrations/file-storage/file-storage.modu
     WebDocModule,
     FileDocModule,
     FileUploadModule,
-    FileModule,
+    FileEntModule,
     FileStorageModule,
   ],
   controllers: [AppController],
