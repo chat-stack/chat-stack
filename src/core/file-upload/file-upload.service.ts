@@ -17,7 +17,7 @@ export class FileUploadService {
     const filenameParts = file.originalname.split('.');
     const fileExtension = filenameParts.pop();
     const filename = `${filenameParts.join('.')}-${v4()}.${fileExtension}`;
-    const fileEnt = await this.fileService.create({
+    const fileEnt = await this.fileService.createPersisted({
       filename,
       mimeType: file.mimetype,
     });

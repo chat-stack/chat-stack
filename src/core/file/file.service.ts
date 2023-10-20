@@ -16,7 +16,7 @@ export class FileService {
     private readonly em: EntityManager,
   ) {}
 
-  async create(createFileDto: CreateFileDto) {
+  async createPersisted(createFileDto: CreateFileDto) {
     const file = this.fileRepository.create(createFileDto);
     await this.em.persistAndFlush(file);
     return file;
