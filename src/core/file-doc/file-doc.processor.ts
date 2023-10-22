@@ -67,7 +67,6 @@ export class FileDocProcessor {
       // Combine the data chunks into a single Buffer
       const fileBuffer = Buffer.concat(fileChunks);
 
-      // Now you can use the fileBuffer, which contains the entire data as a Buffer
       const text = fileBuffer.toString('utf8');
       const splitter = new RecursiveCharacterTextSplitter();
 

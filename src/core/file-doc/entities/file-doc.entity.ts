@@ -1,6 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { Entity, Index, ManyToOne, Property, Rel } from '@mikro-orm/core';
+import {
+  Cascade,
+  Entity,
+  Index,
+  ManyToOne,
+  Property,
+  Rel,
+} from '@mikro-orm/core';
 import { Expose } from 'class-transformer';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
@@ -19,6 +26,7 @@ export class FileDoc extends CustomBaseEntity<
 
   @ManyToOne(() => FileEnt, {
     nullable: false,
+    cascade: [Cascade.ALL],
   })
   fileEnt: Rel<FileEnt>;
 
