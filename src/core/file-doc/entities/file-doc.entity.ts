@@ -20,7 +20,10 @@ export class FileDoc extends CustomBaseEntity<
   'metadata' | 'loadedAt'
 > {
   @ApiProperty({ type: () => Rag })
-  @ManyToOne(() => Rag)
+  @ManyToOne(() => Rag, {
+    cascade: [Cascade.REMOVE],
+    onDelete: 'cascade',
+  })
   @Expose()
   rag: Rel<Rag>;
 

@@ -1,6 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { Entity, Index, ManyToOne, Property, Rel } from '@mikro-orm/core';
+import {
+  Cascade,
+  Entity,
+  Index,
+  ManyToOne,
+  Property,
+  Rel,
+} from '@mikro-orm/core';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
 import { Rag } from 'src/core/rag/entities/rag.entity';
@@ -8,7 +15,10 @@ import { Rag } from 'src/core/rag/entities/rag.entity';
 @Entity()
 export class WebDoc extends CustomBaseEntity<WebDoc, 'metadata' | 'loadedAt'> {
   @ApiProperty({ type: () => Rag })
-  @ManyToOne(() => Rag)
+  @ManyToOne(() => Rag, {
+    cascade: [Cascade.REMOVE],
+    onDelete: 'cascade',
+  })
   rag: Rel<Rag>;
 
   @ApiProperty()
