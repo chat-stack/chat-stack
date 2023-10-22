@@ -4,6 +4,7 @@ import { BullModule } from '@nestjs/bull';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 
 import { LangChainModule } from 'src/core/lang-chain/lang-chain.module';
+import { FileStorageModule } from 'src/integrations/file-storage/file-storage.module';
 
 import { FileDocService } from './file-doc.service';
 import { FileDocController } from './file-doc.controller';
@@ -18,6 +19,7 @@ import { FileDoc } from './entities/file-doc.entity';
       name: 'fileDoc',
     }),
     LangChainModule,
+    FileStorageModule,
   ],
   controllers: [FileDocController],
   providers: [
@@ -30,5 +32,6 @@ import { FileDoc } from './entities/file-doc.entity';
       },
     },
   ],
+  exports: [FileDocService],
 })
 export class FileDocModule {}

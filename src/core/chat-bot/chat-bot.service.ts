@@ -29,7 +29,7 @@ export class ChatBotService {
         ...createChatBotDto.rag,
         fileDocs: createChatBotDto.rag?.fileDocs?.map((fileDocDto) => {
           return {
-            file: Reference.createFromPK(FileDoc, fileDocDto.fileId),
+            fileEnt: Reference.createFromPK(FileDoc, fileDocDto.fileId),
             ...fileDocDto,
           };
         }),

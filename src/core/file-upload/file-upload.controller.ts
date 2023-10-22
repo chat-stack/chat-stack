@@ -21,7 +21,7 @@ export class FileUploadController {
     @UploadedFile(
       new ParseFilePipeBuilder()
         .addFileTypeValidator({
-          fileType: /.*(txt|csv|pdf)$/,
+          fileType: /.*(text|pdf|csv).*/,
         })
         .addMaxSizeValidator({ maxSize: MAX_MB_SIZE * 1000 * 1000 })
         .build({

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { Entity, OneToOne, Property, Rel } from '@mikro-orm/core';
+import { Collection, Entity, OneToMany, Property, Rel } from '@mikro-orm/core';
 import { Expose } from 'class-transformer';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
@@ -9,19 +9,17 @@ import { FileDoc } from 'src/core/file-doc/entities/file-doc.entity';
 @Entity()
 export class FileEnt extends CustomBaseEntity<
   FileEnt,
-  'fileDoc' | 'directoryPath'
+  'fileDocs' | 'directoryPath'
 > {
   @ApiProperty()
   @Expose()
   id: number;
 
   @ApiProperty({ type: () => FileDoc })
-  @OneToOne(() => FileDoc, {
-    mappedBy: 'fileEnt',
+  @OneToMany(() => FileDoc, (fileDoc) => fileDoc.fileEnt, {
     nullable: true,
   })
-  @Expose()
-  fileDoc?: Rel<FileDoc>;
+  fileDocs? = new Collection<Rel<FileDoc>>(this);
 
   @ApiProperty()
   @Property({
