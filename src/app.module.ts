@@ -25,12 +25,14 @@ import { FileDocModule } from './core/file-doc/file-doc.module';
 import { FileUploadModule } from './core/file-upload/file-upload.module';
 import { FileEntModule } from './core/file-ent/file-ent.module';
 import { FileStorageModule } from './integrations/file-storage/file-storage.module';
+import validationSchema from './config/validation-schema';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: [dbConfig, bullConfig, langChainConfig],
+      validationSchema,
     }),
     MikroOrmModule.forRootAsync({
       imports: [ConfigModule, AuthModule, ServiceTokenPayloadModule],
