@@ -1,5 +1,7 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType, OmitType } from '@nestjs/mapped-types';
 
 import { CreateChatBotDto } from './create-chat-bot.dto';
 
-export class UpdateChatBotDto extends PartialType(CreateChatBotDto) {}
+export class UpdateChatBotDto extends PartialType(
+  OmitType(CreateChatBotDto, ['rag']),
+) {}
