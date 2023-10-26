@@ -4,13 +4,24 @@ import {
   ParseFilePipeBuilder,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiTags } from '@nestjs/swagger';
 
-import { FileUploadService } from './file-upload.service';
+import { Role } from 'src/common/types/role.type';
+import { Roles } from 'src/core/auth/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/core/auth/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/core/auth/guards/roles.guard';
+
 import { MAX_MB_SIZE } from './constants';
+import { FileUploadService } from './file-upload.service';
 
+@ApiTags('File Upload')
+@UseGuards(RolesGuard)
+@Roles(Role.SERVICE)
+@UseGuards(JwtAuthGuard)
 @Controller('file-upload')
 export class FileUploadController {
   constructor(private readonly fileUploadService: FileUploadService) {}
