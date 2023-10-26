@@ -6,6 +6,7 @@ import {
   OneToOne,
   Rel,
 } from '@mikro-orm/core';
+import { Exclude } from 'class-transformer';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
 import { ChatBot } from 'src/core/chat-bot/entities/chat-bot.entity';
@@ -21,23 +22,23 @@ export class Rag extends CustomBaseEntity<Rag, undefined> {
   chatBot: Rel<ChatBot>;
 
   @OneToMany(() => TextDoc, (textDoc) => textDoc.rag, {
-    nullable: true,
     cascade: [Cascade.ALL],
     orphanRemoval: true,
   })
+  @Exclude()
   textDocs = new Collection<Rel<TextDoc>>(this);
 
   @OneToMany(() => WebDoc, (webDoc) => webDoc.rag, {
-    nullable: true,
     cascade: [Cascade.ALL],
     orphanRemoval: true,
   })
+  @Exclude()
   webDocs = new Collection<Rel<WebDoc>>(this);
 
   @OneToMany(() => FileDoc, (fileDoc) => fileDoc.rag, {
-    nullable: true,
     cascade: [Cascade.ALL],
     orphanRemoval: true,
   })
+  @Exclude()
   fileDocs = new Collection<Rel<FileDoc>>(this);
 }

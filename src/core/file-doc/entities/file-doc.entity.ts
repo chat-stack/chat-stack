@@ -1,14 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import {
-  Cascade,
-  Entity,
-  Index,
-  ManyToOne,
-  Property,
-  Rel,
-} from '@mikro-orm/core';
-import { Expose } from 'class-transformer';
+import { Entity, Index, ManyToOne, Property, Rel } from '@mikro-orm/core';
+import { Transform, instanceToInstance } from 'class-transformer';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
 import { Rag } from 'src/core/rag/entities/rag.entity';
@@ -20,17 +13,10 @@ export class FileDoc extends CustomBaseEntity<
   'metadata' | 'loadedAt'
 > {
   @ApiProperty({ type: () => Rag })
-  @ManyToOne(() => Rag, {
-    cascade: [Cascade.REMOVE],
-    onDelete: 'cascade',
-  })
-  @Expose()
+  @ManyToOne(() => Rag)
   rag: Rel<Rag>;
 
-  @ManyToOne(() => FileEnt, {
-    nullable: false,
-    cascade: [Cascade.ALL],
-  })
+  @ManyToOne(() => FileEnt)
   fileEnt: Rel<FileEnt>;
 
   @ApiProperty()
@@ -39,13 +25,14 @@ export class FileDoc extends CustomBaseEntity<
     expression: `CREATE INDEX file_doc_metadata_index ON file_doc USING gin (metadata)`,
   })
   @Property({ type: 'jsonb', nullable: true })
-  @Expose()
+  @Transform(({ value }) => {
+    return instanceToInstance(value, { strategy: 'exposeAll' });
+  })
   metadata?: Record<string, any>;
 
   @ApiProperty()
   @Property({
     nullable: true,
   })
-  @Expose()
   loadedAt?: Date;
 }

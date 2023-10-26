@@ -39,6 +39,9 @@ export class FileDocProcessor {
       indexName,
     });
 
+    // first make sure existing docs with same id is removed
+    await this.langChainService.deleteDocuments(id, indexName);
+
     const fileDoc = await this.fileDocRepository.findOne(id, {
       populate: ['fileEnt'],
     });

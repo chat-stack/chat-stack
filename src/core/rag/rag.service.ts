@@ -27,9 +27,6 @@ export class RagService {
       rag.webDocs.getItems(),
       indexName,
     );
-    await this.fileDocService.loadToVectorStoreBulk(
-      rag.fileDocs.getItems(),
-      indexName,
-    );
+    await this.fileDocService.loadToVectorStoreBulk(rag.fileDocs.getItems());
   }
 }

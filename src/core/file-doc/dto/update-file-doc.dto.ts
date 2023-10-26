@@ -1,5 +1,7 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { OmitType, PartialType } from '@nestjs/mapped-types';
 
 import { CreateFileDocDto } from './create-file-doc.dto';
 
-export class UpdateFileDocDto extends PartialType(CreateFileDocDto) {}
+export class UpdateFileDocDto extends PartialType(
+  OmitType(CreateFileDocDto, ['ragId']),
+) {}

@@ -7,6 +7,10 @@ import { IsMetadata } from 'src/common/decorators/is-metadata.decorator';
 export class CreateFileDocDto {
   @ApiProperty()
   @IsNumber()
+  ragId?: number;
+
+  @ApiProperty()
+  @IsNumber()
   fileId: number;
 
   @ApiProperty()

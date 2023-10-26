@@ -101,4 +101,20 @@ export class LangChainService {
       options,
     );
   }
+
+  async deleteDocuments(
+    id: number,
+    indexName: string,
+    ignoreUnavailable = true,
+  ) {
+    return this.openSearchClient.delete_by_query({
+      index: indexName,
+      body: {
+        query: {
+          term: { 'metadata.id': id },
+        },
+      },
+      ignore_unavailable: ignoreUnavailable,
+    });
+  }
 }

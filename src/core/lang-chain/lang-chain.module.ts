@@ -42,6 +42,6 @@ import { LangChainService } from './lang-chain.service';
       inject: [ConfigService],
     },
   ],
-  exports: [LangChainService],
+  exports: [LangChainService, OpenSearchClient],
 })
 export class LangChainModule {}

@@ -12,7 +12,7 @@ import {
   Rel,
   Unique,
 } from '@mikro-orm/core';
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude } from 'class-transformer';
 import { v4 as uuid } from 'uuid';
 
 import { CustomBaseEntity } from 'src/common/entities/custom-base-entity.entity';
@@ -29,23 +29,19 @@ export class ChatBot extends CustomBaseEntity<
   @Index()
   @Unique()
   @Property({ type: 'uuid', default: uuid() })
-  @Expose()
   uuid: string = uuid();
 
   @ApiProperty()
   @Unique()
   @Property()
-  @Expose()
   name: string;
 
   @ApiProperty()
   @Property({ nullable: true })
-  @Expose()
   promptTemplate?: string;
 
   @ApiProperty()
   @Property({ nullable: true })
-  @Expose()
   firstAssistantMessage?: string;
 
   @OneToMany(() => ChatSession, (chatSession) => chatSession.chatBot, {
@@ -62,7 +58,6 @@ export class ChatBot extends CustomBaseEntity<
     default: ChatBotMode.DEFAULT,
     type: 'string',
   })
-  @Expose()
   mode: ChatBotMode = ChatBotMode.DEFAULT;
 
   @OneToOne(() => Rag, {
@@ -70,5 +65,6 @@ export class ChatBot extends CustomBaseEntity<
     orphanRemoval: true,
     nullable: true,
   })
+  @Exclude()
   rag?: Rel<Rag>;
 }

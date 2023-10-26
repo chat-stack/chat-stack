@@ -97,7 +97,7 @@ async function bootstrap() {
   app.useGlobalPipes(new TrimPipe());
   app.useGlobalInterceptors(
     new ClassSerializerInterceptor(app.get(Reflector), {
-      strategy: 'excludeAll',
+      enableCircularCheck: true,
     }),
   );
   const config = new DocumentBuilder()
