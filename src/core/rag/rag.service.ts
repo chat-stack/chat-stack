@@ -19,10 +19,7 @@ export class RagService {
   async loadToVectorStore(rag: Rag) {
     await this.em.populate(rag, ['chatBot', 'textDocs', 'webDocs']);
     const indexName = `${rag.chatBot.uuid}-rag`;
-    await this.textDocService.loadToVectorStoreBulk(
-      rag.textDocs.getItems(),
-      indexName,
-    );
+    await this.textDocService.loadToVectorStoreBulk(rag.textDocs.getItems());
     await this.webDocService.loadToVectorStoreBulk(
       rag.webDocs.getItems(),
       indexName,

@@ -65,6 +65,5 @@ export class ChatBot extends CustomBaseEntity<
     orphanRemoval: true,
     nullable: true,
   })
-  @Exclude()
   rag?: Rel<Rag>;
 }
