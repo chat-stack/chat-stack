@@ -38,6 +38,10 @@ export class WebDocProcessor {
     const vectorStore = this.langChainService.createVectorStore({
       indexName,
     });
+
+    // first make sure existing docs with same id is removed
+    await this.langChainService.deleteDocuments(id, indexName);
+
     const loader = new PuppeteerWebBaseLoader(url, {
       launchOptions: {
         headless: 'new',
