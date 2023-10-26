@@ -8,6 +8,7 @@ import {
   Post,
   Query,
   UseFilters,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
@@ -16,6 +17,10 @@ import DatabaseExceptionFilter from 'src/common/exception-filters/database-excep
 import { ApiPaginatedResponse } from 'src/common/decorators/api-paginated-response.decorator';
 import { PageOptionsDto } from 'src/common/dto/page/page-option.dto';
 import { PageDto } from 'src/common/dto/page/page.dto';
+import { Role } from 'src/common/types/role.type';
+import { Roles } from 'src/core/auth/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/core/auth/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/core/auth/guards/roles.guard';
 
 import { FileDocService } from './file-doc.service';
 
@@ -24,6 +29,9 @@ import { FileDoc } from './entities/file-doc.entity';
 import { UpdateFileDocDto } from './dto/update-file-doc.dto';
 
 @ApiTags('FileDoc')
+@UseGuards(RolesGuard)
+@Roles(Role.SERVICE)
+@UseGuards(JwtAuthGuard)
 @Controller({
   path: 'file-doc',
   version: '1',
