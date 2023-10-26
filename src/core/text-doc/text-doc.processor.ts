@@ -30,6 +30,9 @@ export class TextDocProcessor {
     const vectorStore = this.langChainService.createVectorStore({
       indexName,
     });
+    // first make sure existing docs with same id is removed
+    await this.langChainService.deleteDocuments(id, indexName);
+
     await vectorStore.addDocuments([document]);
     const textDoc = await this.textDocRepository.findOne(id);
     if (textDoc) {
