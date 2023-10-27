@@ -10,7 +10,7 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { ApiPaginatedResponse } from 'src/common/decorators/api-paginated-response.decorator';
 import { PageOptionsDto } from 'src/common/dto/page/page-option.dto';
@@ -29,6 +29,7 @@ import { ChatBot } from './entities/chat-bot.entity';
 import { UpdateChatBotDto } from './dto/update-chat-bot.dto';
 
 @ApiTags('ChatBot')
+@ApiBearerAuth()
 @UseGuards(RolesGuard)
 @Roles(Role.SERVICE)
 @UseGuards(JwtAuthGuard)

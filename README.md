@@ -85,7 +85,7 @@ Access Swagger from http://localhost:5001/api
 
 An online version is also available from ReadmeDocs but the interactive playground is not available for urls under localhost.
 
-ReadmeDocs: 
+ReadmeDocs: https://chatstack.readme.io/reference/
 
 ## Features
 

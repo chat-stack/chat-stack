@@ -1,5 +1,5 @@
 import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { IUserContext } from 'src/core/auth/interfaces/user-context.interface';
 
@@ -16,6 +16,7 @@ import { ChatService } from './chat.service';
 import { GetChatBotResponseDto } from './dto/get-chat-bot-response.dto';
 
 @ApiTags('Chat')
+@ApiBearerAuth()
 @UseGuards(RolesGuard)
 @Roles(Role.SERVICE, Role.END_CUSTOMER, Role.ANON)
 @UseGuards(JwtAuthGuard)

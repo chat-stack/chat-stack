@@ -10,7 +10,7 @@ import {
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { ApiMixedResponse } from 'src/common/decorators/api-mixed-response.decorator';
 import DatabaseExceptionFilter from 'src/common/exception-filters/database-exception.filter';
@@ -29,6 +29,7 @@ import { UpdateTextDocDto } from './dto/update-text-doc.dto';
 import { TextDoc } from './entities/text-doc.entity';
 
 @ApiTags('TextDoc')
+@ApiBearerAuth()
 @UseGuards(RolesGuard)
 @Roles(Role.SERVICE)
 @UseGuards(JwtAuthGuard)

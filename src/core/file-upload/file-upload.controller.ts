@@ -8,7 +8,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { Role } from 'src/common/types/role.type';
 import { Roles } from 'src/core/auth/decorators/roles.decorator';
@@ -19,6 +19,7 @@ import { MAX_MB_SIZE } from './constants';
 import { FileUploadService } from './file-upload.service';
 
 @ApiTags('File Upload')
+@ApiBearerAuth()
 @UseGuards(RolesGuard)
 @Roles(Role.SERVICE)
 @UseGuards(JwtAuthGuard)

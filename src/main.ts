@@ -85,6 +85,10 @@ async function bootstrap() {
       instance,
     }),
   });
+  // In local dev this allows readme doc try-it playground
+  if (process.env.NODE_ENV === 'local') {
+    app.enableCors();
+  }
   app.enableVersioning({
     type: VersioningType.URI,
   });
