@@ -26,7 +26,7 @@ Clone this repo then run pnpm install
 pnpm install
 ```
 
-Copy `example.env` to `.env` then file in necessary environment variables.
+Copy `example.env` to `.env` then fill in necessary environment variables.
 
 - OPENAI_API_KEY is required and you need to obtain it from openai.com
 - For JWT secret you can generate a random string
