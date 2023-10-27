@@ -100,6 +100,6 @@ export class ChatService {
       message: result.text,
     });
     await this.em.persistAndFlush(assistantChatHistory);
-    return JSON.stringify(result);
+    return result;
   }
 }

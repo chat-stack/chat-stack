@@ -1,73 +1,111 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
 ## Installation
 
-```bash
-$ pnpm install
+Clone this repo then run it with Docker Compose
+
+```
+docker-compose up --build -d
 ```
 
-## Running the app
-
-```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+Inside NestJS docker container
+```
+docker exec -it chat-stack-nestjs sh
 ```
 
-## Test
+Run initial MikroOrm schema generation with
 
-```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+```
+pnpm mikro-orm schema:fresh --run
 ```
 
-## Support
+Then restart NestJS docker container
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Overview of the APIs
+First: get service token from console output.
+
+Create ChatBot
+```
+POST http://localhost:5001/v1/chat-bot
+```
+```json
+{
+    "name": "TestChatBot",
+    "promptTemplate": "You are an AI assistant",
+    "mode": "RAG",
+    "rag": {
+        "textDocs": [
+            {
+                "text": "Some test texts"
+            }
+        ],
+        "webDocs": [
+            {
+                "url": "https://news.ycombinator.com/item?id=37806861"
+            }
+        ]
+    }
+}
+```
+You will get some response like
+```json
+{
+    "uuid": "ad73f858-22cd-48b0-80c3-99042e96547e",
+    "mode": "RAG",
+    "name": "TestChatBot",
+    "promptTemplate": "You are an AI assistant",
+    "rag": {
+        "id": 1
+    },
+    "id": 1
+}
+```
+
+Then send a test message to the ChatBot, where chatSessionDistinctId is a uuid created from front end or you can get one from https://www.uuidgenerator.net/
+
+```
+POST http://localhost:5001/v1/chat
+```
+```json
+{
+    "chatBotUuid": "ad73f858-22cd-48b0-80c3-99042e96547e",
+    "chatSessionDistinctId": "75378b24-a982-494b-8626-1708bd29b850",
+    "userMessage": "Github link for llama.cpp?"
+}
+```
+Example Response
+```json
+{
+    "text": "Sure! Here is the Github link for llama.cpp: \n\nhttps://github.com/ggerganov/llama.cpp"
+}
+```
+Explanation: we created the ChatBot with WebDoc of url https://news.ycombinator.com/item?id=37806861 and in that HackerNews discussion this knowledge is added to our RAG ChatBot.
+
+## Swagger API Doc
+
+Access Swagger from http://localhost:5001/api
+
+An online version is also available from ReadmeDocs but the interactive playground is not available for urls under localhost.
+
+ReadmeDocs: 
+
+## Features
+
+- [ ] Auth
+- [ ] Metadata Filters
+- [ ] End Customer customizations
+- [x] Chat
+- [x] ChatBot
+- [x] ChatSession
+- [x] ChatHistory
+- [x] RAG (WIP)
+  - [x] TextDoc
+  - [x] WebDoc
+  - [x] FileDoc
+- [ ] Agents
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author: [James Zhang](https://jczhang.com)
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+ChatStack is [Apache Licensed](LICENSE).
