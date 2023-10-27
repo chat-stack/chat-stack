@@ -2,6 +2,10 @@
 
 ChatStack provides a one stop service stack to host a a set of ChatBot APIs that let you create redistributable ChatBots (for your own customers) with RAG mode to attach your own documentations from text, web pages, or files (csv, pdf etc.). Agent mode is also planned for future release.
 
+Disclaimer:
+
+This repo is still under construction and is in early access mode. Production use is not recommended and let us know if you have any questions by open a github issue.
+
 ## Tech Stack
 
 ChatStack combines following technologies
