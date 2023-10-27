@@ -1,3 +1,19 @@
+## Introduction
+
+ChatStack provides a one stop service stack to host a a set of ChatBot APIs that let you create redistributable ChatBots (for your own customers) with RAG mode to attach your own documentations from text, web pages, or files (csv, pdf etc.). Agent mode is also planned for future release.
+
+## Tech Stack
+
+ChatStack combines following technologies
+
+- Nest.js
+- Langchain
+- OpenSearch
+- Postgresql & MikroOrm
+- Bull Queue & Redis
+
+Its Nest.js also features latest SWC compiler.
+
 ## Installation
 
 Clone this repo then run it with Docker Compose
@@ -20,7 +36,7 @@ pnpm mikro-orm schema:fresh --run
 Then restart NestJS docker container
 
 ## Overview of the APIs
-First: get service token from console output.
+IMPORTANT: first get service token from console output. And use it in `Authorization: Bearer <service_token>` header when endpoints request authentication.
 
 Create ChatBot
 ```
@@ -79,13 +95,11 @@ Example Response
 ```
 Explanation: we created the ChatBot with WebDoc of url https://news.ycombinator.com/item?id=37806861 and in that HackerNews discussion this knowledge is added to our RAG ChatBot.
 
-## Swagger API Doc
+## API Doc
 
-Access Swagger from http://localhost:5001/api
+Access Swagger API docs from http://localhost:5001/api
 
-An online version is also available from ReadmeDocs but the interactive playground is not available for urls under localhost.
-
-ReadmeDocs: https://chatstack.readme.io/reference/
+An online version is also available from ReadmeDocs https://chatstack.readme.io/reference/
 
 ## Features
 
