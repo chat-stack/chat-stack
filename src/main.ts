@@ -112,6 +112,11 @@ async function bootstrap() {
       JSON.stringify({
         ...document,
         servers: [{ url: 'http://localhost:5001' }],
+        'x-readme': {
+          'explorer-enabled': true,
+          'proxy-enabled': false,
+          'samples-languages': ['shell', 'python', 'javascript', 'node'],
+        },
       }),
     );
   }
