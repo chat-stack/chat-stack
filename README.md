@@ -89,7 +89,10 @@ ReadmeDocs: https://chatstack.readme.io/reference/
 
 ## Features
 
-- [ ] Auth
+- [ ] Auth (WIP)
+  - [x] Service Token (admin role)
+  - [ ] Anon Token (WIP)
+  - [ ] End Customer
 - [ ] Metadata Filters
 - [ ] End Customer customizations
 - [x] Chat
