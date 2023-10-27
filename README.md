@@ -1,3 +1,6 @@
+# ChatStack
+Redistributable ChatBot APIs with ChatGPT + RAG(Agents) with metadata, Nest.js + Langchain
+
 ## Introduction
 
 ChatStack provides a one stop service stack to host a a set of ChatBot APIs that let you create redistributable ChatBots (for your own customers) with RAG mode to attach your own documentations from text, web pages, or files (csv, pdf etc.). Agent mode is also planned for future release.
