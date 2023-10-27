@@ -25,10 +25,7 @@ export const ApiPaginatedResponse = <TModel extends Type<any>>(
 ) => {
   const description = options?.description || '';
   return applyDecorators(
-    ApiExtraModels(
-      () => PageDto,
-      () => model,
-    ),
+    ApiExtraModels(PageDto, model),
     ApiOkResponse({
       description,
       schema: {
