@@ -61,7 +61,7 @@ POST http://localhost:5001/v1/chat-bot
     }
 }
 ```
-You will get some response like
+You will get some response like (and docs are being loaded asynchronously in background)
 ```json
 {
     "uuid": "ad73f858-22cd-48b0-80c3-99042e96547e",
