@@ -1,4 +1,4 @@
-import { Process, Processor } from '@nestjs/bull';
+import { OnQueueError, OnQueueFailed, Process, Processor } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 
 import { Job } from 'bull';
@@ -105,5 +105,22 @@ export class FileDocProcessor {
         err,
       });
     });
+  }
+
+  captureError(job: Job) {
+    this.logger.error({
+      message: `${job.failedReason?.split('\n')[0]}`,
+      stack: job.stacktrace,
+    });
+  }
+
+  @OnQueueError()
+  async onError(job: Job) {
+    this.captureError(job);
+  }
+
+  @OnQueueFailed()
+  async onFail(job: Job) {
+    this.captureError(job);
   }
 }
