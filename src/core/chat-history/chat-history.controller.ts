@@ -1,36 +1,44 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+
+import { ApiMixedResponse } from 'src/common/decorators/api-mixed-response.decorator';
+import { ApiPaginatedResponse } from 'src/common/decorators/api-paginated-response.decorator';
+import { PageOptionsDto } from 'src/common/dto/page/page-option.dto';
+import { PageDto } from 'src/common/dto/page/page.dto';
+import { Role } from 'src/common/types/role.type';
+import { Roles } from 'src/core/auth/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/core/auth/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/core/auth/guards/roles.guard';
 
 import { ChatHistoryService } from './chat-history.service';
 
-@Controller('chat-history')
+import { ChatHistory } from './entities/chat-history.entity';
+
+@ApiTags('ChatHistory')
+@ApiBearerAuth()
+@UseGuards(RolesGuard)
+@Roles(Role.SERVICE)
+@UseGuards(JwtAuthGuard)
+@Controller({
+  path: 'chat-history',
+  version: '1',
+})
 export class ChatHistoryController {
   constructor(private readonly chatHistoryService: ChatHistoryService) {}
 
-  // @Post()
-  // create(@Body() createChatHistoryDto: CreateChatHistoryDto) {
-  //   return this.chatHistoryService.create(createChatHistoryDto);
-  // }
+  @Get()
+  @ApiOperation({ summary: 'List ChatHistories' })
+  @ApiPaginatedResponse(ChatHistory)
+  async findAll(
+    @Query() pageOptionsDto: PageOptionsDto,
+  ): Promise<PageDto<ChatHistory>> {
+    return this.chatHistoryService.findPage(pageOptionsDto);
+  }
 
-  // @Get()
-  // findAll() {
-  //   return this.chatHistoryService.findAll();
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.chatHistoryService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(
-  //   @Param('id') id: string,
-  //   @Body() updateChatHistoryDto: UpdateChatHistoryDto,
-  // ) {
-  //   return this.chatHistoryService.update(+id, updateChatHistoryDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.chatHistoryService.remove(+id);
-  // }
+  @Get(':id')
+  @ApiOperation({ summary: 'Get ChatHistory' })
+  @ApiMixedResponse(ChatHistory)
+  findOne(@Param('id') id: string) {
+    return this.chatHistoryService.findOneOrFail(+id);
+  }
 }
