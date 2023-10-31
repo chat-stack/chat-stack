@@ -9,6 +9,7 @@ services:
       - chat-stack-opensearch
       - chat-stack-opensearch-dashboards
     build:
+      no_cache: false # turn this on if you want to build without cache
       context: .
       # Only will build local stage from our dockerfile
       target: local
