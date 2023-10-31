@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { IsOptional, IsString, IsUUID } from 'class-validator';
 
@@ -22,7 +22,7 @@ export class GetChatBotResponseDto {
   @IsString()
   userMessage: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsMetadata()
   @IsOptional()
   metadata?: Record<string, any>;

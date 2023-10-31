@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import {
   Cascade,
@@ -25,7 +25,7 @@ export class ChatBot extends CustomBaseEntity<
   ChatBot,
   'firstAssistantMessage' | 'chatSessions'
 > {
-  @ApiProperty()
+  @ApiPropertyOptional()
   @Index()
   @Unique()
   @Property({ type: 'uuid', default: uuid() })
@@ -36,11 +36,11 @@ export class ChatBot extends CustomBaseEntity<
   @Property()
   name: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @Property({ nullable: true })
   promptTemplate?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @Property({ nullable: true })
   firstAssistantMessage?: string;
 
@@ -51,7 +51,7 @@ export class ChatBot extends CustomBaseEntity<
   @Exclude()
   chatSessions = new Collection<Rel<ChatSession>>(this);
 
-  @ApiProperty({ enum: ChatBotMode })
+  @ApiPropertyOptional({ enum: ChatBotMode })
   @Enum({
     items: () => ChatBotMode,
     array: false,

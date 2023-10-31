@@ -1,14 +1,14 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { IsInt, IsOptional, IsString } from 'class-validator';
 
 export class CreateFileEntDto {
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsInt()
   @IsOptional()
   fileDocId?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional({ default: './' })
   @IsString()
   @IsOptional()
   directoryPath? = './';

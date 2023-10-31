@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import {
   Collection,
@@ -43,7 +43,7 @@ export class ChatSession extends CustomBaseEntity<
   })
   endCustomer?: Rel<EndCustomer>;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @Index({
     name: 'chat_session_metadata_index',
     expression: `CREATE INDEX chat_session_metadata_index ON chat_session USING gin (metadata)`,

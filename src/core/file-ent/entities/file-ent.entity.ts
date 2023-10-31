@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import {
   Cascade,
@@ -21,7 +21,7 @@ export class FileEnt extends CustomBaseEntity<
   @ApiProperty()
   id: number;
 
-  @ApiProperty({ type: () => FileDoc })
+  @ApiPropertyOptional({ type: () => FileDoc })
   @OneToMany(() => FileDoc, (fileDoc) => fileDoc.fileEnt, {
     nullable: true,
     cascade: [Cascade.ALL],
@@ -29,7 +29,7 @@ export class FileEnt extends CustomBaseEntity<
   @Exclude()
   fileDocs? = new Collection<Rel<FileDoc>>(this);
 
-  @ApiProperty()
+  @ApiPropertyOptional({ default: './' })
   @Property({
     default: './',
   })

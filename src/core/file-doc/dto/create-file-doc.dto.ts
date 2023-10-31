@@ -1,11 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { IsNumber, IsOptional } from 'class-validator';
 
 import { IsMetadata } from 'src/common/decorators/is-metadata.decorator';
 
 export class CreateFileDocDto {
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   ragId?: number;
 
@@ -13,7 +13,7 @@ export class CreateFileDocDto {
   @IsNumber()
   fileId: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsMetadata()
   @IsOptional()
   metadata?: Record<string, any>;

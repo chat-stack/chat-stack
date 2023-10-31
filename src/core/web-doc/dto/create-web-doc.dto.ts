@@ -1,11 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { IsNumber, IsOptional, IsString, IsUrl } from 'class-validator';
 
 import { IsMetadata } from 'src/common/decorators/is-metadata.decorator';
 
 export class CreateWebDocDto {
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsNumber()
   ragId?: number;
 
@@ -14,7 +14,7 @@ export class CreateWebDocDto {
   @IsString()
   url: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsMetadata()
   @IsOptional()
   metadata?: Record<string, any>;

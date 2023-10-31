@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { IsEnum, IsOptional, IsString } from 'class-validator';
 
@@ -10,22 +10,22 @@ export class CreateChatBotDto {
   @IsString()
   name: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString()
   @IsOptional()
   promptTemplate?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString()
   @IsOptional()
   firstAssistantMessage?: string;
 
-  @ApiProperty({ enum: ChatBotMode })
+  @ApiPropertyOptional({ enum: ChatBotMode, default: ChatBotMode.DEFAULT })
   @IsEnum(ChatBotMode)
   @IsOptional()
   mode: ChatBotMode = ChatBotMode.DEFAULT;
 
-  @ApiProperty({ type: () => CreateRagDto })
+  @ApiPropertyOptional({ type: () => CreateRagDto })
   @IsOptional()
   rag?: CreateRagDto;
 }

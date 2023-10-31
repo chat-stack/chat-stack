@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { Entity, Index, ManyToOne, Property, Rel } from '@mikro-orm/core';
 import { Transform, instanceToInstance } from 'class-transformer';
@@ -30,7 +30,7 @@ export class FileDoc extends CustomBaseEntity<
   })
   metadata?: Record<string, any>;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @Property({
     nullable: true,
   })

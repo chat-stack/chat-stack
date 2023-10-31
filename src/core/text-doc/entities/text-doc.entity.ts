@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import {
   Cascade,
@@ -28,7 +28,7 @@ export class TextDoc extends CustomBaseEntity<
   @Property({ type: 'text' })
   text: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @Index({
     name: 'text_doc_metadata_index',
     expression: `CREATE INDEX text_doc_metadata_index ON text_doc USING gin (metadata)`,
@@ -36,7 +36,7 @@ export class TextDoc extends CustomBaseEntity<
   @Property({ type: 'jsonb', nullable: true })
   metadata?: Record<string, any>;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @Property({ nullable: true })
   loadedAt?: Date;
 }
