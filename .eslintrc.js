@@ -51,6 +51,11 @@ module.exports = {
         ],
         pathGroups: [
           {
+            pattern: '@nestjs/**',
+            group: 'builtin',
+            position: 'before',
+          },
+          {
             pattern: '**/interfaces/**',
             group: 'type',
             position: 'before',
@@ -68,6 +73,7 @@ module.exports = {
         ],
         distinctGroup: true,
         warnOnUnassignedImports: true,
+        pathGroupsExcludedImportTypes: ['@nestjs/**'],
       },
     ],
     'unused-imports/no-unused-imports': 'warn',
